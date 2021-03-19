@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="allegro.cpp" />
     <ClCompile Include="Bitmap.cpp" />
     <ClCompile Include="Blob.cpp" />
     <ClCompile Include="EtaryGroup.cpp" />
@@ -152,8 +153,16 @@
     <ClInclude Include="Blob.h" />
     <ClInclude Include="EtaryGroup.h" />
     <ClInclude Include="Food.h" />
+    <ClInclude Include="allegro.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="World.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\babyblob.png" />
+    <Image Include="Resources\background.jpg" />
+    <Image Include="Resources\food.png" />
+    <Image Include="Resources\goodoldblob.png" />
+    <Image Include="Resources\grownblob.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

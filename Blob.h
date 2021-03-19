@@ -9,11 +9,11 @@ public:
 
 	Position pos;
 	int foodCount;
-	EtaryGroup *eGroup;
+	EtaryGroup* eGroup;
 	float vel;
 	Blob* next;
 
-	Blob();
+	Blob(EtaryGroup* etaryGroup = NULL);
 	void move(float vmaxPercent);
 	void smell(Food* foodList);
 	void grow();

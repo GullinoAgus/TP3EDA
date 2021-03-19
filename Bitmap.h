@@ -1,8 +1,6 @@
 #pragma once
 
-#include <allegro5/allegro5.h>
-#include <allegro5/allegro_image.h>
-
+#include "allegro.h"
 
 class Bitmap
 {
@@ -12,6 +10,7 @@ public:
 	ALLEGRO_BITMAP* bitmap;
 
 	Bitmap(const char* directory);
+	~Bitmap();
 
 };
 

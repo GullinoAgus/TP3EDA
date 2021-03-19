@@ -1,9 +1,9 @@
 #include "Blob.h"
 
 
-Blob::Blob() 
+Blob::Blob(EtaryGroup* etaryGroup)
 {
-
+    this->eGroup = etaryGroup;
 }
 
 

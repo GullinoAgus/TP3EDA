@@ -3,20 +3,51 @@
 
 #include <iostream>
 
+#include "World.h"
+
 using namespace std;
+
 
 int main()
 {
-    cout << "Hola Mundo!" << endl;
+
+    ALLEGRO_DISPLAY* display;
+
+    if (initAllegro5(display) == -1)
+    {
+        return 0;
+    }
+
+    Bitmap textGOb(GOBTEXTURE);
+    Bitmap textGb(GBTEXTURE);
+    Bitmap textBb(BBTEXTURE);
+    Bitmap textFood(FOODTEXTURE);
+    Bitmap textWorld(WORLDTEXTURE);
+    if (textGOb.bitmap == NULL || textGb.bitmap == NULL || textBb.bitmap == NULL || textFood.bitmap == NULL || textWorld.bitmap == NULL)
+    {
+        al_destroy_display(display);
+        return 0;
+    }
+
+    EtaryGroup goodOldBlob(GOODOLDBLOB, &textGOb);
+    EtaryGroup grownBlob(GROWNBLOB, &textGb);
+    EtaryGroup babyBlob(BABYBLOB, &textBb);
+
+    World world(&textWorld);
+    world.initBlobList(&babyBlob);
+    world.initFoodList(&textFood);
+
+
+    /*TESTEO*/
+    al_clear_to_color(al_map_rgb(255, 255, 255));
+    al_draw_bitmap(textWorld.bitmap, 0, 0, 0);
+    al_draw_bitmap(textGOb.bitmap, 0, 0, 0);
+    al_draw_bitmap(textGb.bitmap, textGOb.width, 0, 0);
+    al_draw_bitmap(textBb.bitmap, textGb.width + textGOb.width, 0, 0);
+    al_draw_bitmap(textFood.bitmap, textBb.width + textGOb.width + textGb.width, 0, 0);
+    al_flip_display();
+    while (1);
+
+    al_destroy_display(display);
+    return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

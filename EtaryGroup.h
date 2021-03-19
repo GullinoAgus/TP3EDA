@@ -6,10 +6,11 @@ typedef enum {BABYBLOB, GROWNBLOB, GOODOLDBLOB} etaryGroup_t;
 
 class EtaryGroup
 {
-	Bitmap *texture;
+public:
+	Bitmap* texture;
 	etaryGroup_t etaGroup;
 
-	EtaryGroup(Bitmap* texture = NULL);
+	EtaryGroup(etaryGroup_t eGroupID, Bitmap* texture = NULL);
 
 };
 

@@ -1,6 +1,6 @@
 #include "Food.h"
 
-Food::Food(Bitmap* texture = NULL)
+Food::Food(Bitmap* texture)
 {
 	this->texture = texture;
 }

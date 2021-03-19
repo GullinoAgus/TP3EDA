@@ -21,7 +21,9 @@ public:
 	float smellRadius;
 	float randomJiggleLimit;
 
-	World();
+	World( Bitmap* texture = NULL, Blob* listaBlobs = NULL, Food* listaFood = NULL);
 
+	int initBlobList(EtaryGroup* eGroup);
+	int initFoodList(Bitmap* texture);
 };
 

@@ -139,7 +139,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bitmap.cpp" />
+    <ClCompile Include="Blob.cpp" />
+    <ClCompile Include="EtaryGroup.cpp" />
+    <ClCompile Include="Food.cpp" />
+    <ClCompile Include="Position.cpp" />
     <ClCompile Include="TP3EDA.cpp" />
+    <ClCompile Include="World.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Bitmap.h" />
+    <ClInclude Include="Blob.h" />
+    <ClInclude Include="EtaryGroup.h" />
+    <ClInclude Include="Food.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

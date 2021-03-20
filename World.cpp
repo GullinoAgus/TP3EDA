@@ -111,4 +111,16 @@ int World::Simulation()
 
 	}
 
+
+	//Revisamos que tengamos siempre toda la comida
+	for (int i = 0; i < MAX_BLOB_CANT; i++)
+	{
+		if (this->arrFood[i].isNotEaten == false)//Si esta comida la revivimos en otro lado
+		{
+			this->arrFood[i].isNotEaten = true;
+			this->arrFood[i].pos.x = (rand() % (this->texture->width - this->arrFood[i].texture->width));
+			this->arrFood[i].pos.y = (rand() % (this->texture->height - this->arrFood[i].texture->height));
+		}
+	}
+
 }

@@ -5,6 +5,12 @@ World::World(const char* textureDirectory, ModoType modo, float maxVel, unsigned
 	this->texture = new Bitmap(textureDirectory);
 	for (int i = 0; i < initBlobCant; i++)
 	{
+		switch (this->modo)//En base al modo le asinamos una velocidad al blob
+		{
+		case MODO1: this->arrBlobs[i].vel = this->velMax; break; 
+		case MODO2: this->arrBlobs[i].vel = ( rand() % this->velMax); break; 
+		}
+		
 		this->arrBlobs[i].isAlive = 1;
 		this->arrBlobs[i].pos.x = (rand() % (this->texture->width - this->arrBlobs[i].eGroup->texture->width));
 		this->arrBlobs[i].pos.y = (rand() % (this->texture->height - this->arrBlobs[i].eGroup->texture->height));
@@ -48,6 +54,7 @@ int World::birth()
 
 int World::Simulation()
 {
+	//
 	
 
 	for (int i = 0; i < MAX_BLOB_CANT; i++)//Para cada blob vemos ...

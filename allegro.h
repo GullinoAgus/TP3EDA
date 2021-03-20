@@ -7,13 +7,11 @@
 #include <allegro5/allegro_ttf.h>
 
 
-#define WORLDTEXTURE ".\\Resources\\background.jpg"
-#define GOBTEXTURE ".\\Resources\\goodoldblob.png"
-#define GBTEXTURE ".\\Resources\\grownblob.png"
-#define BBTEXTURE ".\\Resources\\babyblob.png"
-#define FOODTEXTURE ".\\Resources\\food.png"
 
-#define DISPLAYWIDTH 1280
-#define DISPLAYHEIGHT 720
+
+
+
+#define DISPLAY_WIDTH 1280
+#define DISPLAY_HEIGHT 720
 
 int initAllegro5(ALLEGRO_DISPLAY*& display);

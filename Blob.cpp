@@ -1,9 +1,30 @@
 #include "Blob.h"
 
+static const EtaryGroup GoodOldBlob(GOOD_OLD_BLOB, GOB_TEXTURE);
+static const EtaryGroup GrownBlob(GROWN_BLOB, GB_TEXTURE);
+static const EtaryGroup BabyBlob(BABY_BLOB, BB_TEXTURE);
 
-Blob::Blob(EtaryGroup* etaryGroup)
+Blob::Blob(EtaryGroupType tipo)
 {
-    this->eGroup = etaryGroup;
+	switch (tipo)
+	{
+		case BABY_BLOB:
+			this->eGroup = &BabyBlob;
+			break;
+		case GROWN_BLOB:
+			this->eGroup = &GrownBlob;
+			break;
+		case GOOD_OLD_BLOB:
+			this->eGroup = &GoodOldBlob;
+			break;
+		default:
+			this->eGroup = NULL;
+			break;
+	}
+	this->foodCount = 0;
+	this->isAlive = 0;
+	this->vel = 0;
+	this->pos = { 0 , 0, 0 };
 }
 
 
@@ -25,19 +46,9 @@ void Blob::grow()
 }
 
 
-void Blob::birth(Blob*& blobList)
+
+void Blob::die()
 {
      //TODO: add your implementation code here.
 }
 
-
-void Blob::destroy(Blob*& blobList)
-{
-     //TODO: add your implementation code here.
-}
-
-
-void Blob::merge(Blob*& blobList, Blob* colidingBlob)
-{
-    // TODO: Add your implementation code here.
-}

@@ -1,14 +1,28 @@
 #include "World.h"
 
-World::World(Bitmap* texture, Blob* listaBlobs, Food* listaFood)
+World::World(const char* textureDirectory, ModoType modo, float maxVel, unsigned int initBlobCant, unsigned int initFoodCant)
 {
-	this->texture = texture;
-	this->listaBlobs = listaBlobs;
-	this->listaFood = listaFood;
-	this->velMax = 100.0F;
-	this->modo = MODO1;
-	this->initBlobCount = 10;
-	this->foodCount = 10;
+	this->texture = new Bitmap(textureDirectory);
+	for (int i = 0; i < initBlobCant; i++)
+	{
+		this->arrBlobs[i].isAlive = 1;
+		this->arrBlobs[i].pos.x = (rand() % (this->texture->width - this->arrBlobs[i].eGroup->texture->width));
+		this->arrBlobs[i].pos.y = (rand() % (this->texture->height - this->arrBlobs[i].eGroup->texture->height));
+		this->arrBlobs[i].pos.direction = ((rand() % 3600)/10.0F);
+
+	}
+	for (int i = 0; i < initFoodCant; i++)
+	{
+		this->arrFood[i].isNotEaten = 1;
+		this->arrFood[i].pos.x = (rand() % (this->texture->width - this->arrFood[i].texture->width));
+		this->arrFood[i].pos.y = (rand() % (this->texture->height - this->arrFood[i].texture->height));
+
+	}
+	this->arrFood;
+	this->velMax = maxVel;
+	this->modo = modo;
+	this->initBlobCount = initBlobCant;
+	this->foodCount = initFoodCant;
 	this->velPercent = 1.0F;
 	this->deathProbGOb = 0.0F;
 	this->deathProbGb = 0.0F;
@@ -17,36 +31,17 @@ World::World(Bitmap* texture, Blob* listaBlobs, Food* listaFood)
 	this->randomJiggleLimit = 360.0F;
 }
 
-int World::initBlobList(EtaryGroup* eGroup)
+World::~World()
 {
-	Blob* aux = NULL;
 
+	delete this->texture;
 
-	for (unsigned int i = 0; i < this->initBlobCount ; i++)
-	{
-		this->listaBlobs = (Blob*)calloc(1, sizeof(Blob));
-		this->listaBlobs->eGroup = eGroup;
-		this->listaBlobs->next = aux;
-		aux = this->listaBlobs;
-
-	}
-
-	return 0;
 }
 
 
-int World::initFoodList(Bitmap* texture)
+
+int World::birth()
 {
-	Food* aux = NULL;
 
-	for (unsigned int i = 0; i < this->foodCount; i++)
-	{
-		this->listaFood = (Food*)calloc(1, sizeof(Food));
-		this->listaFood->texture = texture;
-		this->listaFood->next = aux;
-		aux = this->listaFood;
 
-	}
-
-	return 0;
 }

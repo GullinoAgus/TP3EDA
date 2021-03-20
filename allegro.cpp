@@ -24,7 +24,7 @@ int initAllegro5(ALLEGRO_DISPLAY*& display) {
     if (!al_install_mouse()) {
         return -1;
     }
-    display = al_create_display(DISPLAYWIDTH, DISPLAYHEIGHT);
+    display = al_create_display(DISPLAY_WIDTH, DISPLAY_HEIGHT);
     if (display == NULL) {
         return -1;
     }

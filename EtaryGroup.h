@@ -2,15 +2,20 @@
 
 #include "Bitmap.h"
 
-typedef enum {BABYBLOB, GROWNBLOB, GOODOLDBLOB} etaryGroup_t;
+typedef enum {
+	BABY_BLOB,
+	GROWN_BLOB,
+	GOOD_OLD_BLOB,
+} EtaryGroupType;
 
 class EtaryGroup
 {
 public:
 	Bitmap* texture;
-	etaryGroup_t etaGroup;
+	unsigned int food2Birth;
+	EtaryGroupType etaGroup;
 
-	EtaryGroup(etaryGroup_t eGroupID, Bitmap* texture = NULL);
+	EtaryGroup(EtaryGroupType eGroupID, const char* textureDirectory);
 
 };
 

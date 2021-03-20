@@ -3,22 +3,26 @@
 #include "Food.h"
 #include "EtaryGroup.h"
 
+#define GOB_TEXTURE ".\\Resources\\goodoldblob.png"
+#define GB_TEXTURE ".\\Resources\\grownblob.png"
+#define BB_TEXTURE ".\\Resources\\babyblob.png"
+
 class Blob
 {
 public:
 
 	Position pos;
 	int foodCount;
-	EtaryGroup* eGroup;
+	const EtaryGroup* eGroup;
 	float vel;
-	Blob* next;
+	bool isAlive;
 
-	Blob(EtaryGroup* etaryGroup = NULL);
+	Blob(EtaryGroupType tipo = BABY_BLOB);
 	void move(float vmaxPercent);
 	void smell(Food* foodList);
 	void grow();
-	void birth(Blob*& blobList);
-	void destroy(Blob*& blobList);
-	void merge(Blob*& blobList, Blob* colidingBlob);
+	void die();
+	void revive();
 };
+
 

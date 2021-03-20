@@ -3,15 +3,16 @@
 #include "Position.h"
 #include "Bitmap.h"
 
+#define FOOD_TEXTURE ".\\Resources\\food.png"
+
 class Food
 {
 public:
 	Position pos;
-	Bitmap *texture;
-	Food* next;
+	bool isNotEaten;
+	const Bitmap *texture;
 
-	Food(Bitmap* texture = NULL);
-	void destroy(Food *&listaFood);
+	Food();
 
 };
 

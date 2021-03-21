@@ -29,7 +29,8 @@ public:
 	World(const char* textureDirectory, ModoType modo, float maxVel, unsigned int initBlobCant, unsigned int initFoodCant = 0);
 	~World();
 
-	int birth(float x, float y);
-	int Simulation(); 
+	void birth(float x, float y, float newDir);
+	void blobOutScreen(unsigned int blobIndex);
+	void Simulation(); 
 };
 

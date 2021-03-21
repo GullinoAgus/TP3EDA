@@ -1,6 +1,8 @@
 #include "Blob.h"
+#define _USE_MATH_DEFINES
 #include <cmath>
 
+#define DEG2RAD(x) ((x)*( M_PI /180.0F))
 
 static const EtaryGroup GoodOldBlob(GOOD_OLD_BLOB, GOB_TEXTURE);
 static const EtaryGroup GrownBlob(GROWN_BLOB, GB_TEXTURE);
@@ -31,10 +33,11 @@ Blob::Blob(EtaryGroupType tipo)
 
 void Blob::move(float vmaxPercent)
 {
-    // TODO: Add your implementation code here.
+	this->pos.x += this->vel * vmaxPercent * cosf(DEG2RAD(this->pos.direction));
+	this->pos.y += this->vel * vmaxPercent * sinf(DEG2RAD(this->pos.direction));
 }
 
-//TODO: Se puede optimizar tomando solo el centro de la comida
+
 void Blob::smell(float smellRadius, Food *foodArr, unsigned int foodCant)
 {
 	Position blobCenter;
@@ -67,7 +70,7 @@ void Blob::smell(float smellRadius, Food *foodArr, unsigned int foodCant)
 }
 
 
-void Blob::grow()
+void Blob::grow(float newDir)
 {
 	switch (this->eGroup->etaGroupID)			//De acuerdo a su grupo etario lo avanzamos al siguiente
 	{
@@ -80,6 +83,7 @@ void Blob::grow()
 	default:
 		break;
 	}
+	this->pos.direction = newDir;				//Actualizo la direccion y el contador de comida
 	this->foodCount = 0;
 }
 
@@ -91,7 +95,12 @@ void Blob::die()
 }
 
 
-void Blob::revive()
+void Blob::revive(float x, float y, float newDir)
 {
 	this->isAlive = 1;
+	this->eGroup = &BabyBlob;
+	this->foodCount = 0;
+	this->pos.x = x;
+	this->pos.y = y;
+	this->pos.direction = newDir;
 }

@@ -20,9 +20,9 @@ public:
 	Blob(EtaryGroupType tipo = BABY_BLOB);
 	void move(float vmaxPercent);
 	void smell(float smellRadius, Food* FoodArr, unsigned int foodCant);
-	void grow();
+	void grow(float newDir);
 	void die();
-	void revive();
+	void revive(float x, float y, float newDir);
 };
 
 

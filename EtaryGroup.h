@@ -13,9 +13,10 @@ class EtaryGroup
 public:
 	Bitmap* texture;
 	unsigned int food2Birth;
-	EtaryGroupType etaGroup;
+	EtaryGroupType etaGroupID;
 
 	EtaryGroup(EtaryGroupType eGroupID, const char* textureDirectory);
+	~EtaryGroup();
 
 };
 

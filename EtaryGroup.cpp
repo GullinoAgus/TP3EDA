@@ -3,7 +3,7 @@
 EtaryGroup::EtaryGroup(EtaryGroupType eGroupID, const char *textureDirectory)
 {
 	this->texture = new Bitmap(textureDirectory);
-	this->etaGroup = eGroupID;
+	this->etaGroupID = eGroupID;
 	switch (eGroupID)
 	{
 	case BABY_BLOB:

@@ -78,12 +78,34 @@ void World::blobOutScreen(unsigned int blobIndex)
 
 void World::Simulation()
 {
-	//
 	
-	//TODO: Hay que agregar lo de ver que el blob este vivo antes de chequear todo, y ademas falta calcular la muerte
 	for (int i = 0; i < MAX_BLOB_CANT; i++)//Para cada blob vemos ...
 	{
 
+		//Vemos si el blob muere
+		switch (this->arrBlobs[i].eGroup->etaGroup)//Dependiendo el grupo etario tienen distintas probabilidad de muerte
+		{
+		case BABY_BLOB:
+			if ( ((rand() % 101)/100) < this->deathProbBb)//Si el numero al azar entre 0 y 1 es menor que la probabilidad de muerte
+				this->arrBlobs[i].die();//Lo matamos
+			break;
+		case GROWN_BLOB:
+			if (((rand() % 101) / 100) < this->deathProbGb)
+				this->arrBlobs[i].die();
+			break;
+		case GOOD_OLD_BLOB:
+			if (((rand() % 101) / 100) < this->deathProbGOb)
+				this->arrBlobs[i].die();
+			break;
+		default:
+			break;
+		}
+
+		if (this->arrBlobs[i].isAlive == false)//Si esta muerto el blob
+		{
+			continue; //Pasamos al siguiente blob 
+		}
+		
 		//Vemos las coliciones de los blobs con las comidas
 		for(int j=0; j< MAX_FOOD_CANT ; j++)
 		{

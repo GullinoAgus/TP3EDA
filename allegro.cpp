@@ -39,7 +39,7 @@ void spritesInit()
 
 
 }
-
+/*
 void preGame(puntero a mode,puntero a blobs ammount)
 {
     //antes de empezar la simulacion
@@ -110,4 +110,4 @@ void printBlobs(puntero a blobs)
 void printFood(puntero a food)
 {
     for()
-}
+}*/

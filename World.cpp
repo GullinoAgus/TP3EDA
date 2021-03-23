@@ -93,31 +93,6 @@ void World::Simulation()
 				this->arrBlobs[i].foodCount += 1;//Si se choco con la comida incrementamos su contador de comida
 				this->arrFood[j].isNotEaten = false;// Destruimos lo que fue comido
 
-				//TODO : Cambiar este switch. abajo de esto esta el if que deberia quedar
-
-				//switch (this->arrBlobs->eGroup->etaGroupID)//Si el contador de comida del blob es sufiente para crecer lo hacemos crecer
-				//{
-				//case BABY_BLOB:
-				//	if (this->arrBlobs[i].foodCount == 5)
-				//	{				
-				//		this->birth(arrBlobs[i].pos.x, arrBlobs[i].pos.y); // Si ya comio suficiente da a luz
-				//	}
-
-				//	; break;
-				//case GROWN_BLOB:
-				//	if (this->arrBlobs[i].foodCount == 4)
-				//	{				
-				//		this->birth(arrBlobs[i].pos.x, arrBlobs[i].pos.y);//Si ya comio suficiente da a luz
-				//	}
-				//	; break;
-				//case GOOD_OLD_BLOB:
-				//	if (this->arrBlobs[i].foodCount == 3)
-				//	{				
-				//		this->birth(arrBlobs[i].pos.x, arrBlobs[i].pos.y);//Si ya comio suficiente da a luz
-				//	}
-				//	; break;
-				//}
-
 				if (arrBlobs[i].foodCount == arrBlobs[i].eGroup->food2Birth)
 				{
 					this->birth(arrBlobs[i].pos.x, arrBlobs[i].pos.y, abs(arrBlobs[i].pos.direction - 180)); // Si ya comio suficiente da a luz

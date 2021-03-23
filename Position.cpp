@@ -1,8 +1,7 @@
 #include "Position.h"
 #define _USE_MATH_DEFINES
 #include <cmath>
-
-#define PI 3.14159265F
+		
 #define RAD2DEG(x) ((x)*(180.0F/ M_PI ))
 
 

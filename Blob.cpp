@@ -4,22 +4,22 @@
 
 #define DEG2RAD(x) ((x)*( M_PI /180.0F))
 
-static const EtaryGroup GoodOldBlob(GOOD_OLD_BLOB, GOB_TEXTURE);
-static const EtaryGroup GrownBlob(GROWN_BLOB, GB_TEXTURE);
-static const EtaryGroup BabyBlob(BABY_BLOB, BB_TEXTURE);
+static const EtaryGroup goodOldBlob(GOOD_OLD_BLOB, GOB_TEXTURE);
+static const EtaryGroup grownBlob(GROWN_BLOB, GB_TEXTURE);
+static const EtaryGroup babyBlob(BABY_BLOB, BB_TEXTURE);
 
 Blob::Blob(EtaryGroupType tipo)
 {
 	switch (tipo)
 	{
 		case BABY_BLOB:
-			this->eGroup = &BabyBlob;
+			this->eGroup = &babyBlob;
 			break;
 		case GROWN_BLOB:
-			this->eGroup = &GrownBlob;
+			this->eGroup = &grownBlob;
 			break;
 		case GOOD_OLD_BLOB:
-			this->eGroup = &GoodOldBlob;
+			this->eGroup = &goodOldBlob;
 			break;
 		default:
 			this->eGroup = NULL;
@@ -75,10 +75,10 @@ void Blob::grow(float newDir)
 	switch (this->eGroup->etaGroupID)			//De acuerdo a su grupo etario lo avanzamos al siguiente
 	{
 	case BABY_BLOB:
-		this->eGroup = &GrownBlob;
+		this->eGroup = &grownBlob;
 		break;
 	case GROWN_BLOB:
-		this->eGroup = &GoodOldBlob;
+		this->eGroup = &goodOldBlob;
 		break;
 	default:
 		break;
@@ -98,7 +98,7 @@ void Blob::die()
 void Blob::revive(float x, float y, float newDir)
 {
 	this->isAlive = 1;
-	this->eGroup = &BabyBlob;
+	this->eGroup = &babyBlob;
 	this->foodCount = 0;
 	this->pos.x = x;
 	this->pos.y = y;

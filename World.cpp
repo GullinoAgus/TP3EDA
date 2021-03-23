@@ -81,6 +81,7 @@ void World::Simulation()
 	
 	for (int i = 0; i < MAX_BLOB_CANT; i++)//Para cada blob vemos ...
 	{
+
 		//Vemos si el blob muere
 		switch (this->arrBlobs[i].eGroup->etaGroup)//Dependiendo el grupo etario tienen distintas probabilidad de muerte
 		{
@@ -148,7 +149,6 @@ void World::Simulation()
 		this->arrBlobs[i].move(this->velPercent);
 		this->blobOutScreen(i);
 	}
-
 
 	//Revisamos que tengamos siempre toda la comida
 	for (int i = 0; i < MAX_FOOD_CANT; i++)

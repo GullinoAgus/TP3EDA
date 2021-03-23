@@ -99,22 +99,24 @@ void World::Simulation()
 				}
 			}
 		}
-		//TODO: Chequear en la consigna como tiene que quedar la direccion despues de la colision, es un promedio medio loco y hay que usar randomJiggleLimit
+		
 		//Vemos las coliciones entre blobs
-		for (int j = 0, flag=0; j < MAX_BLOB_CANT; j++ )//Aca debemos hacer que el blob ignore compararse consigo mismo
+		for (int j = 0, flag=0, float DirectionSum = 0, int NewDirection = 0; j < MAX_BLOB_CANT; j++ )//Aca debemos hacer que el blob ignore compararse consigo mismo
 		{
 			if( (this->arrBlobs[i].pos.x == this->arrBlobs[j].pos.x) && (this->arrBlobs[i].pos.y == this->arrBlobs[j].pos.y) && (this->arrBlobs+i != this->arrBlobs+j))//Falta tomar en cuenta el ancho y alto de los blobs
 			{
 				if (this->arrBlobs[i].eGroup->etaGroupID == this->arrBlobs[j].eGroup->etaGroupID)//Si son del mismo tamaño
 				{
+					DirectionSum += this->arrBlobs[j].pos.direction;//Agrego al promedio la direccion del blob
 					this->arrBlobs[j].die();//Matamos al blob con el que choco
-					flag = 1; //Marcamos el flag para saber que el blob va a crecer
+					flag += 1; //Marcamos el flag para saber que el blob va a crecer
 				}
 			}
 			if ((j == (MAX_BLOB_CANT - 1)) && (flag > 0))//Si ya revisamos toda la lista y se chocaron dos blobs
 			{
-				//HACK: Le agregue a grow que reciba la direccion nueva(en la consigna dice)
-				this->arrBlobs[i].grow();//Hacemos que el blob crezca 
+				
+				NewDirection = (DirectionSum/flag)+ (rand() % this->randomJiggleLimit) ;
+				this->arrBlobs[i].grow(NewDirection);//Hacemos que el blob crezca 
 			}
 		}
 		

@@ -1,5 +1,6 @@
 #include "allegro.h"
 
+
 int initAllegro5(ALLEGRO_DISPLAY*& display) {
 
 
@@ -42,22 +43,22 @@ void spritesInit()
 void preGame(puntero a mode,puntero a blobs ammount)
 {
     //antes de empezar la simulacion
-    ImGui::Begin("Blob World", &blob_world, ImGuiWindowFlags_MenuBar);
+    Begin("Blob World", &blob_world, ImGuiWindowFlags_MenuBar);
     //default bool mode = 1. mode1 = true, mode2 = false
-    if (ImGui::Button("Mode"))
+    if (Button("Mode"))
     {
         mode ? false : true;
         if (mode)
-            ImGui::Text("Mode 1 selected");
+            Text("Mode 1 selected");
         else
-            ImGui::Text("Mode 2 selected");
-        ImGui::Begin("Blob ammount.");
-        if (ImGui::Button("Increase Blob ammount"))
+            Text("Mode 2 selected");
+        Begin("Blob ammount.");
+        if (Button("Increase Blob ammount"))
             blobsAmmount++;
-        else if (ImGui::Button("Decrease Blob ammount"))
+        else if (Button("Decrease Blob ammount"))
             blobsAmmount--;
-        ImGui::Text("Blobs = %d", BlobsAmount);
-        ImGui::End();
+        Text("Blobs = %d", BlobsAmount);
+        End();
         // despues de emp
     }
 }
@@ -66,27 +67,27 @@ void gamePrint( puntero a los speeds,  probBILIDADES DE MUERTE, cantidad de comi
 {
 ezar la simulacion
 
-    ImGui::Text("Maximum speed");
-    ImGui::SliderFloat("float", &MaxSpeed, 0.0f, 1.0f);//revisar &MaxSpeed
-    ImGui::Text("Speed percentage");
-    ImGui::SliderFloat("float", &PerSpeed, 0.0f, 1.0f);//revisar &PerSpeed
-    ImGui::Text("Smell radius");
-    ImGui::SliderFloat("float", &smellRadius, 0.0f, 1.0f);
-    ImGui::Text("Baby blob death probability");
-    ImGui::SliderFloat("float", &babyDeathProb, 0.0f, 1.0f);
-    ImGui::Text("Grown blob death probability");
-    ImGui::SliderFloat("float", &grownDeathProb, 0.0f, 1.0f);
-    ImGui::Text("Old blob death probability");
-    ImGui::SliderFloat("float", &oldDeathProb, 0.0f, 1.0f);
+    Text("Maximum speed");
+    SliderFloat("float", &MaxSpeed, 0.0f, 1.0f);//revisar &MaxSpeed
+    Text("Speed percentage");
+    SliderFloat("float", &PerSpeed, 0.0f, 1.0f);//revisar &PerSpeed
+    Text("Smell radius");
+    SliderFloat("float", &smellRadius, 0.0f, 1.0f);
+    Text("Baby blob death probability");
+    SliderFloat("float", &babyDeathProb, 0.0f, 1.0f);
+    Text("Grown blob death probability");
+    SliderFloat("float", &grownDeathProb, 0.0f, 1.0f);
+    Text("Old blob death probability");
+    SliderFloat("float", &oldDeathProb, 0.0f, 1.0f);
 
 
-    ImGui::Begin("Food count.");
-    if (ImGui::Button("Increase food count"))
+    Begin("Food count.");
+    if (Button("Increase food count"))
         foodCount++;
-    else if (ImGui::Button("Decrease food count"))
+    else if (Button("Decrease food count"))
         foodCount--;
-    ImGui::Text("Food count = %d", foodCount);
-    ImGui::End();
+    Text("Food count = %d", foodCount);
+    End();
     //que es randomJiggleLimit?
     initAllegro5(display);//asumo
     printBlobs(puntero a la clase blob);

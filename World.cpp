@@ -38,13 +38,13 @@ World::World(const char* textureDirectory, ModoType modo, float maxVel, unsigned
 	this->randomJiggleLimit = 360.0F;
 }
 
+
 World::~World()
 {
 
 	delete this->texture;
 
 }
-
 
 
 void World::birth(float x, float y, float newDir)

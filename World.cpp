@@ -78,12 +78,33 @@ void World::blobOutScreen(unsigned int blobIndex)
 
 void World::Simulation()
 {
-	//
 	
-	//TODO: Hay que agregar lo de ver que el blob este vivo antes de chequear todo, y ademas falta calcular la muerte
 	for (int i = 0; i < MAX_BLOB_CANT; i++)//Para cada blob vemos ...
 	{
+		//Vemos si el blob muere
+		switch (this->arrBlobs[i].eGroup->etaGroup)//Dependiendo el grupo etario tienen distintas probabilidad de muerte
+		{
+		case BABY_BLOB:
+			if ( ((rand() % 101)/100) < this->deathProbBb)//Si el numero al azar entre 0 y 1 es menor que la probabilidad de muerte
+				this->arrBlobs[i].die();//Lo matamos
+			break;
+		case GROWN_BLOB:
+			if (((rand() % 101) / 100) < this->deathProbGb)
+				this->arrBlobs[i].die();
+			break;
+		case GOOD_OLD_BLOB:
+			if (((rand() % 101) / 100) < this->deathProbGOb)
+				this->arrBlobs[i].die();
+			break;
+		default:
+			break;
+		}
 
+		if (this->arrBlobs[i].isAlive == false)//Si esta muerto el blob
+		{
+			continue; //Pasamos al siguiente blob 
+		}
+		
 		//Vemos las coliciones de los blobs con las comidas
 		for(int j=0; j< MAX_FOOD_CANT ; j++)
 		{
@@ -93,53 +114,30 @@ void World::Simulation()
 				this->arrBlobs[i].foodCount += 1;//Si se choco con la comida incrementamos su contador de comida
 				this->arrFood[j].isNotEaten = false;// Destruimos lo que fue comido
 
-				//TODO : Cambiar este switch. abajo de esto esta el if que deberia quedar
-
-				//switch (this->arrBlobs->eGroup->etaGroupID)//Si el contador de comida del blob es sufiente para crecer lo hacemos crecer
-				//{
-				//case BABY_BLOB:
-				//	if (this->arrBlobs[i].foodCount == 5)
-				//	{				
-				//		this->birth(arrBlobs[i].pos.x, arrBlobs[i].pos.y); // Si ya comio suficiente da a luz
-				//	}
-
-				//	; break;
-				//case GROWN_BLOB:
-				//	if (this->arrBlobs[i].foodCount == 4)
-				//	{				
-				//		this->birth(arrBlobs[i].pos.x, arrBlobs[i].pos.y);//Si ya comio suficiente da a luz
-				//	}
-				//	; break;
-				//case GOOD_OLD_BLOB:
-				//	if (this->arrBlobs[i].foodCount == 3)
-				//	{				
-				//		this->birth(arrBlobs[i].pos.x, arrBlobs[i].pos.y);//Si ya comio suficiente da a luz
-				//	}
-				//	; break;
-				//}
-
 				if (arrBlobs[i].foodCount == arrBlobs[i].eGroup->food2Birth)
 				{
 					this->birth(arrBlobs[i].pos.x, arrBlobs[i].pos.y, abs(arrBlobs[i].pos.direction - 180)); // Si ya comio suficiente da a luz
 				}
 			}
 		}
-		//TODO: Chequear en la consigna como tiene que quedar la direccion despues de la colision, es un promedio medio loco y hay que usar randomJiggleLimit
+		
 		//Vemos las coliciones entre blobs
-		for (int j = 0, flag=0; j < MAX_BLOB_CANT; j++ )//Aca debemos hacer que el blob ignore compararse consigo mismo
+		for (int j = 0, flag=0, float DirectionSum = 0, int NewDirection = 0; j < MAX_BLOB_CANT; j++ )//Aca debemos hacer que el blob ignore compararse consigo mismo
 		{
 			if( (this->arrBlobs[i].pos.x == this->arrBlobs[j].pos.x) && (this->arrBlobs[i].pos.y == this->arrBlobs[j].pos.y) && (this->arrBlobs+i != this->arrBlobs+j))//Falta tomar en cuenta el ancho y alto de los blobs
 			{
 				if (this->arrBlobs[i].eGroup->etaGroupID == this->arrBlobs[j].eGroup->etaGroupID)//Si son del mismo tamaño
 				{
+					DirectionSum += this->arrBlobs[j].pos.direction;//Agrego al promedio la direccion del blob
 					this->arrBlobs[j].die();//Matamos al blob con el que choco
-					flag = 1; //Marcamos el flag para saber que el blob va a crecer
+					flag += 1; //Marcamos el flag para saber que el blob va a crecer
 				}
 			}
 			if ((j == (MAX_BLOB_CANT - 1)) && (flag > 0))//Si ya revisamos toda la lista y se chocaron dos blobs
 			{
-				//HACK: Le agregue a grow que reciba la direccion nueva(en la consigna dice)
-				this->arrBlobs[i].grow();//Hacemos que el blob crezca 
+				
+				NewDirection = (DirectionSum/flag)+ (rand() % this->randomJiggleLimit) ;
+				this->arrBlobs[i].grow(NewDirection);//Hacemos que el blob crezca 
 			}
 		}
 		
@@ -149,7 +147,6 @@ void World::Simulation()
 
 		//Actualizamos las posiciones de los blobs en base a su velocidad
 		this->arrBlobs[i].move(this->velPercent);
-		//TODO: Chequear esto con salvador, habria que ver si se agrega aca o no. Es para que cuando se este por escapar de la pantalla aparezca del otro lado
 		this->blobOutScreen(i);
 	}
 

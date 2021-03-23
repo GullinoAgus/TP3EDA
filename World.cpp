@@ -108,8 +108,7 @@ void World::Simulation()
 		//Vemos las coliciones de los blobs con las comidas
 		for(int j=0; j< MAX_FOOD_CANT ; j++)
 		{
-			//TODO : Completar el condicional de colision. Recordar que esta el bitmap con el alto y ancho en eGroup.texture.height y .width
-			if ((this->arrBlobs[i].pos.x == this->arrFood->pos.x) && (this->arrBlobs[i].pos.y == this->arrFood->pos.y))// Si el blob colisiono con comida//Falta tomar en cuenta el ancho y alto de food y blob
+			if ( ( ( (this->arrBlobs[i].pos.x + this->arrBlobs[i].eGroup->texture->width) > (this->arrFood[j].pos.x)) && ((this->arrBlobs[i].pos.x) < (this->arrFood[j].pos.x + this->arrFood[j].texture->width))) && (((this->arrBlobs[i].pos.y + this->arrBlobs[i].eGroup->texture->height) > (this->arrFood[j].pos.y)) && ((this->arrBlobs[i].pos.y) < (this->arrFood[j].pos.y + this->arrFood[j].texture->height))))// Si el blob colisiono con comida
 			{
 				this->arrBlobs[i].foodCount += 1;//Si se choco con la comida incrementamos su contador de comida
 				this->arrFood[j].isNotEaten = false;// Destruimos lo que fue comido
@@ -124,7 +123,7 @@ void World::Simulation()
 		//Vemos las coliciones entre blobs
 		for (int j = 0, flag=0, float DirectionSum = 0, int NewDirection = 0; j < MAX_BLOB_CANT; j++ )//Aca debemos hacer que el blob ignore compararse consigo mismo
 		{
-			if( (this->arrBlobs[i].pos.x == this->arrBlobs[j].pos.x) && (this->arrBlobs[i].pos.y == this->arrBlobs[j].pos.y) && (this->arrBlobs+i != this->arrBlobs+j))//Falta tomar en cuenta el ancho y alto de los blobs
+			if( (i != j) && ( ( (this->arrBlobs[i].pos.x + this->arrBlobs[i].eGroup->texture->width) > (this->arrBlobs[j].pos.x) ) && ( (this->arrBlobs[i].pos.x) < (this->arrBlobs[j].pos.x + this->arrBlobs[j].eGroup->texture->width) ) ) && ( ( (this->arrBlobs[i].pos.y + this->arrBlobs[i].eGroup->texture->height) > (this->arrBlobs[j].pos.y)) && ((this->arrBlobs[i].pos.y) < (this->arrBlobs[j].pos.y + this->arrBlobs[j].eGroup->texture->height) ) ) )
 			{
 				if (this->arrBlobs[i].eGroup->etaGroupID == this->arrBlobs[j].eGroup->etaGroupID)//Si son del mismo tamaño
 				{

@@ -81,7 +81,6 @@ void World::Simulation()
 	
 	for (int i = 0; i < MAX_BLOB_CANT; i++)//Para cada blob vemos ...
 	{
-
 		//Vemos si el blob muere
 		switch (this->arrBlobs[i].eGroup->etaGroup)//Dependiendo el grupo etario tienen distintas probabilidad de muerte
 		{
@@ -148,7 +147,6 @@ void World::Simulation()
 
 		//Actualizamos las posiciones de los blobs en base a su velocidad
 		this->arrBlobs[i].move(this->velPercent);
-		//TODO: Chequear esto con salvador, habria que ver si se agrega aca o no. Es para que cuando se este por escapar de la pantalla aparezca del otro lado
 		this->blobOutScreen(i);
 	}
 

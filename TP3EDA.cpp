@@ -12,6 +12,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
+    //Inicializacion
     srand(time(NULL));
 
     bool simStarted = false;
@@ -24,12 +25,13 @@ int main(int argc, char **argv)
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     
     World world;
+
     // Main loop
     bool running = true;
     al_start_timer(timer);
     while (running)
     {
-       
+        
         while (al_get_next_event(queue, &ev))
         {
             ImGui_ImplAllegro5_ProcessEvent(&ev);
@@ -44,7 +46,7 @@ int main(int argc, char **argv)
                 ImGui_ImplAllegro5_CreateDeviceObjects();
                 break;
             case ALLEGRO_EVENT_TIMER:
-                
+                //Simulacion 
                 if (!simStarted)
                 {
                     simStarted = world.preGame();
@@ -67,7 +69,7 @@ int main(int argc, char **argv)
         }
 
         
-        // Rendering
+        
 
     }
 
@@ -81,5 +83,6 @@ int main(int argc, char **argv)
     al_destroy_timer(timer);
     ImGui_ImplAllegro5_Shutdown();
     ImGui::DestroyContext();
+
     return 0;
 }

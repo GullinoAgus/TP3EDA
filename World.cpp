@@ -83,7 +83,7 @@ void World::Simulation()
 	{
 
 		//Vemos si el blob muere
-		switch (this->arrBlobs[i].eGroup->etaGroup)//Dependiendo el grupo etario tienen distintas probabilidad de muerte
+		switch (this->arrBlobs[i].eGroup->etaGroupID)//Dependiendo el grupo etario tienen distintas probabilidad de muerte
 		{
 		case BABY_BLOB:
 			if ( ((rand() % 101)/100) < this->deathProbBb)//Si el numero al azar entre 0 y 1 es menor que la probabilidad de muerte
@@ -122,7 +122,8 @@ void World::Simulation()
 		}
 		
 		//Vemos las coliciones entre blobs
-		for (int j = 0, flag=0, float DirectionSum = 0, int NewDirection = 0; j < MAX_BLOB_CANT; j++ )//Aca debemos hacer que el blob ignore compararse consigo mismo
+		float DirectionSum = 0.F, NewDirection = 0.0F;
+		for (int j = 0, flag=0; j < MAX_BLOB_CANT; j++ )//Aca debemos hacer que el blob ignore compararse consigo mismo
 		{
 			if( (i != j) && ( ( (this->arrBlobs[i].pos.x + this->arrBlobs[i].eGroup->texture->width) > (this->arrBlobs[j].pos.x) ) && ( (this->arrBlobs[i].pos.x) < (this->arrBlobs[j].pos.x + this->arrBlobs[j].eGroup->texture->width) ) ) && ( ( (this->arrBlobs[i].pos.y + this->arrBlobs[i].eGroup->texture->height) > (this->arrBlobs[j].pos.y)) && ((this->arrBlobs[i].pos.y) < (this->arrBlobs[j].pos.y + this->arrBlobs[j].eGroup->texture->height) ) ) )
 			{
@@ -136,7 +137,7 @@ void World::Simulation()
 			if ((j == (MAX_BLOB_CANT - 1)) && (flag > 0))//Si ya revisamos toda la lista y se chocaron dos blobs
 			{
 				
-				NewDirection = (DirectionSum/flag)+ (rand() % this->randomJiggleLimit) ;
+				NewDirection = (DirectionSum/flag)+ (rand() % (int)this->randomJiggleLimit) ;
 				this->arrBlobs[i].grow(NewDirection);//Hacemos que el blob crezca 
 			}
 		}

@@ -76,7 +76,7 @@ void World::Simulation()
 			continue; //Pasamos al siguiente blob 
 		}
 		//Vemos si el blob muere
-		if (deathTimer++ >= FPS)
+		if (deathTimer++ >= TICKS_2_TOSS_DEATH)
 		{
 			deathTimer = 0; 
 			switch (this->arrBlobs[i].eGroup->etaGroupID)//Dependiendo el grupo etario tienen distintas probabilidad de muerte

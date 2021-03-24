@@ -8,11 +8,11 @@
 class Food
 {
 public:
-	Position pos;
-	bool isNotEaten;
-	const Bitmap *texture;
+	Position pos;//Ubicacion (x y) en el mapa
+	bool isNotEaten;//Para saber si esta comida o no "viva o muerta"
+	const Bitmap *texture;//Textura
 
-	Food();
+	Food();//Constructor y funciones asociadas a la inicailizacion y destruccion de la comida
 	static void loadTexture();
 	static void freeTextures();
 };

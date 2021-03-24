@@ -16,9 +16,10 @@
 
 
 
-#define FPS 60.0
+#define FPS 60.0				//Frames por segundo de muestra
 
-#define DISPLAY_WIDTH 900
+#define DISPLAY_WIDTH 900		//Tamanio de la ventana
 #define DISPLAY_HEIGHT 650
 
+//Funcion de inicializacion de allegro
 int initAllegro5(ALLEGRO_DISPLAY*& display, ALLEGRO_EVENT_QUEUE*& queue, ALLEGRO_TIMER*& timer);

@@ -4,13 +4,14 @@
 
 #define DEG2RAD(x) ((x)*( M_PI /180.0F))
 
-static EtaryGroup goodOldBlob;
+static EtaryGroup goodOldBlob;				//Grupos etarios de los blobs 
 static EtaryGroup grownBlob;
 static EtaryGroup babyBlob;
 
-Blob::Blob(EtaryGroupType type)
+//Constructor de los blobs
+Blob::Blob(EtaryGroupType type)			
 {
-	switch (type)
+	switch (type)					//De acuerdo al tipo seteamos el puntero al grupo etario
 	{
 		case BABY_BLOB:
 			this->eGroup = &babyBlob;
@@ -25,7 +26,7 @@ Blob::Blob(EtaryGroupType type)
 			this->eGroup = NULL;
 			break;
 	}
-	this->foodCount = 0;
+	this->foodCount = 0;					//Inicializamos los otros valores
 	this->sonIndex = -1;
 	this->dadIndex = -1;
 	this->isAlive = 0;
@@ -34,14 +35,14 @@ Blob::Blob(EtaryGroupType type)
 
 }
 
-
+//Actualizacion del movimiento del blob
 void Blob::move(float vmaxPercent)
 {
 	this->pos.x += this->vel * vmaxPercent * cosf(DEG2RAD(this->pos.direction));
 	this->pos.y += this->vel * vmaxPercent * sinf(DEG2RAD(this->pos.direction));
 }
 
-
+//Cambio de direccion de acuerdo a la direccion de la comida mas cercano en radio determinado (Direccion siguiendo al olfato)
 void Blob::smell(float smellRadius, Food *foodArr, unsigned int foodCant)
 {
 	Position blobCenter;
@@ -78,7 +79,7 @@ void Blob::smell(float smellRadius, Food *foodArr, unsigned int foodCant)
 	
 }
 
-
+// Crecimiento del blob
 void Blob::grow(float newDir, float newSpeed)
 {
 	switch (this->eGroup->etaGroupID)			//De acuerdo a su grupo etario lo avanzamos al siguiente
@@ -98,24 +99,24 @@ void Blob::grow(float newDir, float newSpeed)
 }
 
 
-
+//Mato al blob
 void Blob::die()
 {
 	this->isAlive = false;
 }
 
-
+//Resucito un blob dandole nuevas posiciones, direccion y velocidad
 void Blob::revive(float x, float y, float newDir)
 {
 	this->isAlive = 1;
-	this->eGroup = &babyBlob;
+	this->eGroup = &babyBlob;			//Revive como babyblob
 	this->foodCount = 0;
 	this->pos.x = x;
 	this->pos.y = y;
 	this->pos.direction = newDir;
 }
 
-
+// Inicializo los grupos etarios
 void Blob::loadTextures()
 {
 	goodOldBlob = EtaryGroup(GOOD_OLD_BLOB, GOB_TEXTURE);
@@ -123,6 +124,7 @@ void Blob::loadTextures()
 	babyBlob = EtaryGroup(BABY_BLOB, BB_TEXTURE);
 }
 
+// Libero las texturas en los grupos etarios
 void Blob::freeTextures()
 {
 	al_destroy_bitmap(goodOldBlob.texture.bitmap);

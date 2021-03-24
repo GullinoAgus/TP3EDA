@@ -118,7 +118,7 @@ void World::Simulation()
 
 					if (arrBlobs[i].foodCount == arrBlobs[i].eGroup->food2Birth && arrBlobs[MAX_BLOB_CANT-1].isAlive != true)
 					{
-						arrBlobs[i].sonIndex = this->birth(arrBlobs[i].pos.x, arrBlobs[i].pos.y, abs(arrBlobs[i].pos.direction + (rand() % (int)this->randomJiggleLimit))); // Si ya comio suficiente da a luz
+						arrBlobs[i].sonIndex = this->birth(arrBlobs[i].pos.x, arrBlobs[i].pos.y, abs(arrBlobs[i].pos.direction + (rand() % ((int)this->randomJiggleLimit + 1)))); // Si ya comio suficiente da a luz
 						arrBlobs[arrBlobs[i].sonIndex].dadIndex = i;
 						arrBlobs[i].foodCount = 0;																	//Reiniciamos el contador de alimento ingerido
 						

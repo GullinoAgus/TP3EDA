@@ -188,6 +188,10 @@ void World::preGame()
 			initBlobCount++;;
 		Text("Blobs = %d", initBlobCount);
 		End();
+		Render();
+		//al_clear_to_color(al_map_rgba_f(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w));
+		ImGui_ImplAllegro5_RenderDrawData(GetDrawData());
+		al_flip_display();
 		// despues de emp
 	}
 }

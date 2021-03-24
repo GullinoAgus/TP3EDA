@@ -7,7 +7,7 @@
 
 #define WORLD_TEXTURE ".\\Resources\\background.jpg"
 
-#define MAX_BLOB_CANT 1000
+#define MAX_BLOB_CANT 500
 #define MAX_FOOD_CANT 100
 
 typedef enum  {MODO1, MODO2} ModoType;

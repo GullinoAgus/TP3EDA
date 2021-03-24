@@ -1,6 +1,9 @@
 #include "World.h"
 #include <cmath>
 
+using namespace ImGui;
+
+
 World::World(const char* textureDirectory, ModoType modo, float maxVel, unsigned int initBlobCant, unsigned int initFoodCant)
 {
 	this->texture = new Bitmap(textureDirectory);
@@ -164,71 +167,70 @@ void World::Simulation()
 
 }
 
-void World::preGame(ModoType* mode, unsigned int* initBlobCount)
+void World::preGame()
 {
 	//antes de empezar la simulacion
-	Begin("Blob World", &blob_world, ImGuiWindowFlags_MenuBar);
+	Begin("Blob World", NULL, ImGuiWindowFlags_MenuBar);//REVISAR
 	//default bool mode = 1. mode1 = true, mode2 = false
-	if (Button("Mode"))
+	if (Button("Modo"))
 	{
-		mode ? false : true;
-		if (mode)
+		modo ? false : true;
+		if (modo)
 			Text("Mode 1 selected");
 		else
 			Text("Mode 2 selected");
 		Begin("Blob ammount.");
 		if (Button("Increase Blob ammount"))
-			*initBlobCount++;
+			initBlobCount++;
 		else if (Button("Decrease Blob ammount"))
-			*initBlobCount++;;
-		Text("Blobs = %d", *initBlobCount);
+			initBlobCount++;;
+		Text("Blobs = %d", initBlobCount);
 		End();
 		// despues de emp
 	}
 }
 
-void World::printBlobs(Blob* blobs)
+void World::printBlobs()
 {
-	for (int i = 0; i < BLOBS_N; i++)
+	for (int i = 0; i < MAX_BLOB_CANT; i++)
 	{
-		if (blobs[i].isAlive)
+		if (arrBlobs[i].isAlive)
 		{
-			if ( blobs[i].eGroup.etaGroupID == BABY_BLOB)
-				al_draw_bitmap( blobs[i]->eGroup.texture, blobs[i].pos.x, blobs[i].pos.y, 0);
-			else if (blobs[i]->eGroup.etaGroupID == GROWN_BLOB)
-				al_draw_bitmap(blobs[i]->eGroup.texture, blobs[i].pos.x, blobs[i].pos.y, 0);
-			else if (blobs[i]->eGroup.etaGroupID == GOOD_OLD_BLOB)
-				al_draw_bitmap(blobs[i]->eGroup.texture, blobs[i].pos.x, blobs[i].pos.y, 0);
+			if (this->arrBlobs[i].eGroup->etaGroupID == BABY_BLOB)
+				al_draw_bitmap( arrBlobs[i].eGroup->texture->bitmap, arrBlobs[i].pos.x, arrBlobs[i].pos.y, 0);
+			else if (this->arrBlobs[i].eGroup->etaGroupID == GROWN_BLOB)
+				al_draw_bitmap(arrBlobs[i].eGroup->texture->bitmap, arrBlobs[i].pos.x, arrBlobs[i].pos.y, 0);
+			else if (this->arrBlobs[i].eGroup->etaGroupID == GOOD_OLD_BLOB)
+				al_draw_bitmap(arrBlobs[i].eGroup->texture->bitmap, arrBlobs[i].pos.x, arrBlobs[i].pos.y, 0);
 		}
 	}
 }
 
-void World::printFood(Food* food)
+void World::printFood()
 {
-	for (int i = 0; i < FOOD_N; i++)
+	for (int i = 0; i < MAX_FOOD_CANT; i++)
 	{
-		if (food[i].isNotEaten)
+		if (arrFood[i].isNotEaten)
 		{
-			al_draw_bitmap(food[i].texture, food[i].pos.x, food[i].pos.y, 0);
+			al_draw_bitmap(arrFood[i].texture->bitmap, arrFood[i].pos.x, arrFood[i].pos.y, 0);
 		}
 	}
 }
 
-void World::gamePrint(float* velMax, float* velPercent, float* deathProbGOb, float* deathProbGb, float* deathProbBb , unsigned int* foodCount, float* smellRadius, ALLEGRO_DISPLAY* display)
+void World::gamePrint()
 {
 
-	Text("Maximum speed");
-	SliderFloat("float", velMax, 0.0f, 1.0f);//revisar &MaxSpeed
+	SliderFloat("Velocidad Maxima", &velMax, 0.0f, 1.0f);//corregir resto
 	Text("Speed percentage");
-	SliderFloat("float", velPercent, 0.0f, 1.0f);//revisar &PerSpeed
+	SliderFloat("float", &velPercent, 0.0f, 1.0f);
 	Text("Smell radius");
-	SliderFloat("float", smellRadius, 0.0f, 1.0f);
+	SliderFloat("float", &smellRadius, 0.0f, 1.0f);
 	Text("Baby blob death probability");
-	SliderFloat("float", deathProbBb, 0.0f, 1.0f);
+	SliderFloat("float", &deathProbBb, 0.0f, 1.0f);
 	Text("Grown blob death probability");
-	SliderFloat("float", deathProbGb, 0.0f, 1.0f);
+	SliderFloat("float", &deathProbGb, 0.0f, 1.0f);
 	Text("Old blob death probability");
-	SliderFloat("float", deathProbGOb, 0.0f, 1.0f);
+	SliderFloat("float", &deathProbGOb, 0.0f, 1.0f);
 
 
 	Begin("Food count.");
@@ -239,7 +241,7 @@ void World::gamePrint(float* velMax, float* velPercent, float* deathProbGOb, flo
 	Text("Food count = %d", foodCount);
 	End();
 	//que es randomJiggleLimit?
-	printBlobs(Blob * blobs);
-	printFood(Food * food);
+	printBlobs();
+	printFood();
 }
 

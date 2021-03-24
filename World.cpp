@@ -159,7 +159,14 @@ void World::Simulation()
 		}
 		if (colisionflag > 0)//Si ya revisamos toda la lista y se chocaron dos blobs
 		{
-			newDirection = (directionSum / colisionflag) + (rand() % (int)this->randomJiggleLimit);
+			if (this->randomJiggleLimit == 0)
+			{
+				newDirection = (directionSum / colisionflag);
+			}
+			else
+			{
+				newDirection = (directionSum / colisionflag) + (rand() % (int)this->randomJiggleLimit);
+			}
 			newSpeed = (speedSum / colisionflag);
 			this->arrBlobs[i].grow(newDirection, newSpeed);//Hacemos que el blob crezca 
 		}

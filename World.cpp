@@ -4,9 +4,9 @@
 using namespace ImGui;
 
 
-World::World(const char* textureDirectory, ModoType modo, float maxVel, unsigned int initBlobCant, unsigned int initFoodCant)
+World::World( ModoType modo, float maxVel, unsigned int initBlobCant, unsigned int initFoodCant)
 {
-	this->texture = new Bitmap(textureDirectory);
+	this->texture = new Bitmap(WORLD_TEXTURE);
 	for (int i = 0; i < initBlobCant; i++)
 	{
 		switch (this->modo)//En base al modo le asinamos una velocidad al blob
@@ -170,6 +170,8 @@ void World::Simulation()
 void World::preGame()
 {
 	//antes de empezar la simulacion
+	ImGui_ImplAllegro5_NewFrame();
+	NewFrame();
 	Begin("Blob World", NULL, ImGuiWindowFlags_MenuBar);//REVISAR
 	//default bool mode = 1. mode1 = true, mode2 = false
 	if (Button("Modo"))

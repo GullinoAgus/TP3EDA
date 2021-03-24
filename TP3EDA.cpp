@@ -19,8 +19,21 @@ int main()
     {
         return 0;
     }
+    World world;
 
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
 
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsClassic();
+
+    // Setup Platform/Renderer backends
+    ImGui_ImplAllegro5_Init(display);
+
+    world.preGame();
     /*TESTEO*/
     al_clear_to_color(al_map_rgb(255, 255, 255));
     al_flip_display();

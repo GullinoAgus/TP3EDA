@@ -52,12 +52,12 @@
 #endif
 
 // Data
-static ALLEGRO_DISPLAY* g_Display = NULL;
-static ALLEGRO_BITMAP* g_Texture = NULL;
+static ALLEGRO_DISPLAY*         g_Display = NULL;
+static ALLEGRO_BITMAP*          g_Texture = NULL;
 static double                   g_Time = 0.0;
-static ALLEGRO_MOUSE_CURSOR* g_MouseCursorInvisible = NULL;
-static ALLEGRO_VERTEX_DECL* g_VertexDecl = NULL;
-static char* g_ClipboardTextData = NULL;
+static ALLEGRO_MOUSE_CURSOR*    g_MouseCursorInvisible = NULL;
+static ALLEGRO_VERTEX_DECL*     g_VertexDecl = NULL;
+static char*                    g_ClipboardTextData = NULL;
 
 struct ImDrawVertAllegro
 {

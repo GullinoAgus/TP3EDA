@@ -282,17 +282,16 @@ void World::gamePrint()
 	ImGui::SliderFloat("Probabilidad de muerte para Good Old", &deathProbGOb, 0.0f, 1.0f, "%.2f");
 	ImGui::SliderFloat("Maximo de direccion de fusion", &randomJiggleLimit, 0.0f, 360.0f, "%.1f");
 	ImGui::SetNextItemWidth(100);
-	ImGui::InputInt("Cantidad de comida", (int*)&foodCount);								//
-	if (foodCount < 0 || foodCount > MAX_FOOD_CANT)
+	ImGui::InputInt("Cantidad de comida", (int*)&foodCount);								//Entrada para al cantidad de comida
+	if (foodCount < 0 || foodCount > MAX_FOOD_CANT)							//Chequeo maximos y corrijo
 	{
 		foodCount = 0;
 	}
-	ImGui::End();
-	//que es randomJiggleLimit?
-	al_draw_bitmap(this->texture.bitmap, 0, 0, 0);
-	printBlobs();
-	printFood();
-	ImGui::Render();
+	ImGui::End();														
+	al_draw_bitmap(this->texture.bitmap, 0, 0, 0);						//Dibujo el mundo
+	printBlobs();														//Dibujo los blobs
+	printFood();														//Dibujo las comidas
+	ImGui::Render();													//Termino de dibujar y apso a pantalla
 	ImGui_ImplAllegro5_RenderDrawData(ImGui::GetDrawData());
 	al_flip_display();
 }
@@ -312,7 +311,7 @@ void World::initBlobs()
 			break;
 		}
 
-		this->arrBlobs[i].isAlive = 1;
+		this->arrBlobs[i].isAlive = 1;						//Lo inicializamos vivo y con posicion y direccion aleatoria
 		this->arrBlobs[i].pos.x = (rand() % (this->texture.width - this->arrBlobs[i].eGroup->texture.width));
 		this->arrBlobs[i].pos.y = (rand() % (this->texture.height - this->arrBlobs[i].eGroup->texture.height));
 		this->arrBlobs[i].pos.direction = ((rand() % 3600) / 10.0F);

@@ -170,30 +170,24 @@ void World::Simulation()
 void World::preGame()
 {
 	//antes de empezar la simulacion
-	ImGui_ImplAllegro5_NewFrame();
-	NewFrame();
 	Begin("Blob World", NULL, ImGuiWindowFlags_MenuBar);//REVISAR
 	//default bool mode = 1. mode1 = true, mode2 = false
-	if (Button("Modo"))
+	if (Button("MODO 1")) 
 	{
-		modo ? false : true;
-		if (modo)
-			Text("Mode 1 selected");
-		else
-			Text("Mode 2 selected");
-		Begin("Blob ammount.");
-		if (Button("Increase Blob ammount"))
-			initBlobCount++;
-		else if (Button("Decrease Blob ammount"))
-			initBlobCount++;;
-		Text("Blobs = %d", initBlobCount);
-		End();
-		Render();
-		//al_clear_to_color(al_map_rgba_f(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w));
-		ImGui_ImplAllegro5_RenderDrawData(GetDrawData());
-		al_flip_display();
-		// despues de emp
+		modo = MODO1;
 	}
+	if (Button("MODO 2"))
+	{
+		modo = MODO2;
+	}
+	SetNextItemWidth(100);
+	InputInt("Cantidad inicial de blobs", (int*)&initBlobCount);
+	if (initBlobCount < 1)
+	{
+		initBlobCount = 1;
+	}
+	End();
+	al_clear_to_color(al_map_rgb(255, 255, 255));
 }
 
 void World::printBlobs()

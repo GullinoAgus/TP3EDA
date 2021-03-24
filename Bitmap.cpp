@@ -1,7 +1,7 @@
 #include "Bitmap.h"
 
 
-Bitmap::Bitmap(const char* directory = NULL)
+Bitmap::Bitmap(const char* directory)
 {
 	this->bitmap = al_load_bitmap(directory);
 	if (this->bitmap != NULL)

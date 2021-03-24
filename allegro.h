@@ -22,4 +22,4 @@
 #define DISPLAY_WIDTH 1280
 #define DISPLAY_HEIGHT 720
 
-int initAllegro5(ALLEGRO_DISPLAY*& display);
+int initAllegro5(ALLEGRO_DISPLAY*& display, ALLEGRO_EVENT_QUEUE*& queue);

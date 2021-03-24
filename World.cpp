@@ -8,16 +8,16 @@ World::World( ModoType modo, float maxVel, unsigned int initBlobCant, unsigned i
 	this->texture = Bitmap(WORLD_TEXTURE);
 	Blob::loadTextures();
 	Food::loadTexture();
-	this->velMax = maxVel;
-	this->modo = modo;
-	this->initBlobCount = initBlobCant;
-	this->foodCount = initFoodCant;
-	this->velPercent = 1.0F;
-	this->deathProbGOb = 0.0F;
-	this->deathProbGb = 0.0F;
-	this->deathProbBb = 0.0F;
-	this->smellRadius = 100;
-	this->randomJiggleLimit = 360.0F;
+	this->velMax = maxVel;//Velocidad maxima definida por el usuario usada en modo 2
+	this->modo = modo;//Modo 1 o 2 
+	this->initBlobCount = initBlobCant;//Cantidad inicial de blob 
+	this->foodCount = initFoodCant;//Cantidad de comida
+	this->velPercent = 1.0F;//Velocidad de simualcion 
+	this->deathProbGOb = 0.0F;//Probabilidad de muerte de los Good old blob
+	this->deathProbGb = 0.0F;//Probabilidad de muerte de los Grown blob
+	this->deathProbBb = 0.0F;//Probabilidad de muerte de los Baby blob
+	this->smellRadius = 100;//Rango de olfato de los blob
+	this->randomJiggleLimit = 360.0F;//Maximo valor de orientacion de un nuevo blob
 	
 
 }
@@ -41,7 +41,7 @@ int World::birth(float x, float y, float newDir)
 	return i;
 }
 
-//Correccion para geometria no euclideana
+
 void World::blobOutScreen(unsigned int blobIndex)
 {
 	if (this->arrBlobs[blobIndex].pos.x >= this->texture.width)		//Si se pasa por la derecha
@@ -62,11 +62,12 @@ void World::blobOutScreen(unsigned int blobIndex)
 	}
 }
 
-//Simulacion del mundo (un llamado = un tick)
+
 void World::Simulation()
 {
 
 	int colisionflag = 0;
+	static int deathTimer = 0;
 	float directionSum = 0.0F, newDirection = 0.0F, speedSum = 0.0F, newSpeed = 0.0f;
 	for (int i = 0; i < MAX_BLOB_CANT; i++)//Para cada blob vemos ...
 	{
@@ -75,33 +76,36 @@ void World::Simulation()
 			continue; //Pasamos al siguiente blob 
 		}
 		//Vemos si el blob muere
-		switch (this->arrBlobs[i].eGroup->etaGroupID)//Dependiendo el grupo etario tienen distintas probabilidad de muerte
+		if (deathTimer++ >= FPS)
 		{
-		case BABY_BLOB:
-			if (((rand() % 101) / 100.0f) < this->deathProbBb)//Si el numero al azar entre 0 y 1 es menor que la probabilidad de muerte
+			deathTimer = 0; 
+			switch (this->arrBlobs[i].eGroup->etaGroupID)//Dependiendo el grupo etario tienen distintas probabilidad de muerte
 			{
-				this->arrBlobs[i].die();//Lo matamos
-				continue; //Pasamos al siguiente blob
+			case BABY_BLOB:
+				if (((rand() % 101) / 100.0f) < this->deathProbBb)//Si el numero al azar entre 0 y 1 es menor que la probabilidad de muerte
+				{
+					this->arrBlobs[i].die();//Lo matamos
+					continue; //Pasamos al siguiente blob
+				}
+				break;
+			case GROWN_BLOB:
+				if (((rand() % 101) / 100.0f) < this->deathProbGb)
+				{
+					this->arrBlobs[i].die();//Lo matamos
+					continue; //Pasamos al siguiente blob
+				}
+				break;
+			case GOOD_OLD_BLOB:
+				if (((rand() % 101) / 100.0f) < this->deathProbGOb)
+				{
+					this->arrBlobs[i].die();//Lo matamos
+					continue; //Pasamos al siguiente blob
+				}
+				break;
+			default:
+				break;
 			}
-			break;
-		case GROWN_BLOB:
-			if (((rand() % 101) / 100.0f) < this->deathProbGb)
-			{
-				this->arrBlobs[i].die();//Lo matamos
-				continue; //Pasamos al siguiente blob
-			}
-			break;
-		case GOOD_OLD_BLOB:
-			if (((rand() % 101) / 100.0f) < this->deathProbGOb)
-			{
-				this->arrBlobs[i].die();//Lo matamos
-				continue; //Pasamos al siguiente blob
-			}
-			break;
-		default:
-			break;
 		}
-		
 		//Vemos las coliciones de los blobs con las comidas
 		for(int j=0; j< MAX_FOOD_CANT ; j++)
 		{
@@ -181,7 +185,6 @@ void World::Simulation()
 
 }
 
-//Dibujado de lmenu de inicio
 bool World::preGame()
 {
 
@@ -240,7 +243,6 @@ bool World::preGame()
 	return modeSelected;
 }
 
-//Dibujado de los blobs
 void World::printBlobs()
 {
 	for (int i = 0; i < MAX_BLOB_CANT; i++)		//Recorremos el arreglo de blobs y dibujamos los que esten vivos
@@ -252,8 +254,7 @@ void World::printBlobs()
 	}
 }
 
-//Dibujado de la comida
-void World::printFood()	
+void World::printFood()
 {
 	for (int i = 0; i < MAX_FOOD_CANT; i++)				//Recorremos el arreglo de comida y dibujamos las que esten sin comer
 	{
@@ -264,7 +265,7 @@ void World::printFood()
 	}
 }
 
-void World::gamePrint()													//Impresion de la simulacion
+void World::gamePrint()
 {
 
 	ImGui_ImplAllegro5_NewFrame();										//Iniciamos el nuevo frame
@@ -300,7 +301,7 @@ void World::gamePrint()													//Impresion de la simulacion
 }
 
 
-void World::initBlobs()										//Inicializacion de los blobs
+void World::initBlobs()
 {
 	for (unsigned int i = 0; i < this->initBlobCount; i++)
 	{
@@ -323,9 +324,9 @@ void World::initBlobs()										//Inicializacion de los blobs
 }
 
 
-void World::initFood()
+void World::initFood()//Inicializador de comida, damos posicion al azar y hacemos que este "viva" 
 {
-	for (unsigned int i = 0; i < this->foodCount; i++)										//Inicializacion de la comida
+	for (unsigned int i = 0; i < this->foodCount; i++)
 	{
 		this->arrFood[i].isNotEaten = true;
 		this->arrFood[i].pos.x = (rand() % (this->texture.width - this->arrFood[i].texture->width));

@@ -18,7 +18,7 @@
 
 #define FPS 60.0
 
-#define DISPLAY_WIDTH 1280
-#define DISPLAY_HEIGHT 720
+#define DISPLAY_WIDTH 900
+#define DISPLAY_HEIGHT 650
 
 int initAllegro5(ALLEGRO_DISPLAY*& display, ALLEGRO_EVENT_QUEUE*& queue, ALLEGRO_TIMER*& timer);

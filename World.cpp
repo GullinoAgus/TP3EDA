@@ -190,7 +190,7 @@ bool World::preGame()
 	ImGui::NewFrame();
 	//antes de empezar la simulacion
 	ImGui::SetNextWindowSize(ImVec2(700, 300));
-	ImGui::SetNextWindowPos(ImVec2(300, 100));
+	ImGui::SetNextWindowPos(ImVec2(100, 100));
 	ImGui::Begin("Blob World", NULL, ImGuiWindowFlags_MenuBar);//REVISAR
 	//default bool mode = 1. mode1 = true, mode2 = false
 	if (ImGui::Button("MODO 1"))
@@ -272,7 +272,9 @@ void World::gamePrint()
 
 	ImGui_ImplAllegro5_NewFrame();
 	ImGui::NewFrame();
-
+	al_clear_to_color(al_map_rgb(0, 50, 150));
+	ImGui::SetNextWindowSize(ImVec2(DISPLAY_WIDTH, DISPLAY_HEIGHT - 470));
+	ImGui::SetNextWindowPos(ImVec2(0, 470));
 	ImGui::Begin("In Game");
 	//SliderFloat("Velocidad Maxima", &velMax, 0.0f, 1.0f);//corregir resto
 	ImGui::SliderFloat("Velocidad de simulacion", &velPercent, 0.0f, 1.0f, "%.2f");

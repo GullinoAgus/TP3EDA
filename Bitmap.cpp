@@ -1,6 +1,6 @@
 #include "Bitmap.h"
 
-
+//constructor del bitmap
 Bitmap::Bitmap(const char* directory)
 {
 

@@ -10,19 +10,23 @@
 class Blob
 {
 public:
-
 	Position pos;
 	int foodCount;
 	const EtaryGroup* eGroup;
 	float vel;
+	int sonIndex;
 	bool isAlive;
 
 	Blob(EtaryGroupType tipo = BABY_BLOB);
 	void move(float vmaxPercent);
 	void smell(float smellRadius, Food* FoodArr, unsigned int foodCant);
-	void grow(float newDir);
+	void grow(float newDir, float newSpeed);
 	void die();
-	void revive(float x, float y, float newDir);
+	void revive(float x, float y, float newDir); 
+	static void loadTextures();
+	static void freeTextures();
 };
+
+
 
 

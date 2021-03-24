@@ -2,7 +2,7 @@
 
 EtaryGroup::EtaryGroup(EtaryGroupType eGroupID, const char *textureDirectory)
 {
-	this->texture = new Bitmap(textureDirectory);
+	this->texture = Bitmap(textureDirectory);
 	this->etaGroupID = eGroupID;
 	switch (eGroupID)
 	{
@@ -19,9 +19,4 @@ EtaryGroup::EtaryGroup(EtaryGroupType eGroupID, const char *textureDirectory)
 		food2Birth = 0;
 		break;
 	}
-}
-
-EtaryGroup::~EtaryGroup() 
-{
-	delete this->texture;
 }

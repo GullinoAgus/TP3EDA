@@ -1,7 +1,7 @@
 #include "allegro.h"
 
 
-int initAllegro5(ALLEGRO_DISPLAY*& display, ALLEGRO_EVENT_QUEUE*& queue) {
+int initAllegro5(ALLEGRO_DISPLAY*& display, ALLEGRO_EVENT_QUEUE*& queue, ALLEGRO_TIMER*& timer) {
 
 
     if (!al_init()) {                   //Inicializacion del display y los addons de allegro
@@ -34,10 +34,12 @@ int initAllegro5(ALLEGRO_DISPLAY*& display, ALLEGRO_EVENT_QUEUE*& queue) {
     }
     al_set_new_display_flags(ALLEGRO_RESIZABLE);
     al_set_window_title(display, "Blob Simulator");
+    timer = al_create_timer(1.0/FPS);
     queue = al_create_event_queue();
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_mouse_event_source());
+    al_register_event_source(queue, al_get_timer_event_source(timer));
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();

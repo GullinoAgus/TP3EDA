@@ -13,6 +13,7 @@ public:
 	const Bitmap *texture;
 
 	Food();
-
+	static void loadTexture();
+	static void freeTextures();
 };
 

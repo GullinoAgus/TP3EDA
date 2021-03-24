@@ -3,7 +3,8 @@
 
 Bitmap::Bitmap(const char* directory)
 {
-	this->bitmap = al_load_bitmap(directory);
+
+	this->bitmap = directory == NULL ? NULL : al_load_bitmap(directory);
 	if (this->bitmap != NULL)
 	{
 		this->height = al_get_bitmap_height(this->bitmap);
@@ -14,9 +15,4 @@ Bitmap::Bitmap(const char* directory)
 		this->height = 0;
 		this->width = 0;
 	}
-}
-
-Bitmap::~Bitmap()
-{
-	al_destroy_bitmap(this->bitmap);
 }

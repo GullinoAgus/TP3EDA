@@ -4,9 +4,9 @@
 
 #define DEG2RAD(x) ((x)*( M_PI /180.0F))
 
-static const EtaryGroup goodOldBlob(GOOD_OLD_BLOB, GOB_TEXTURE);
-static const EtaryGroup grownBlob(GROWN_BLOB, GB_TEXTURE);
-static const EtaryGroup babyBlob(BABY_BLOB, BB_TEXTURE);
+static EtaryGroup goodOldBlob;
+static EtaryGroup grownBlob;
+static EtaryGroup babyBlob;
 
 Blob::Blob(EtaryGroupType tipo)
 {
@@ -26,8 +26,11 @@ Blob::Blob(EtaryGroupType tipo)
 			break;
 	}
 	this->foodCount = 0;
+	this->sonIndex = -1;
 	this->isAlive = 0;
 	this->vel = 0;
+
+
 }
 
 
@@ -45,8 +48,8 @@ void Blob::smell(float smellRadius, Food *foodArr, unsigned int foodCant)
 	int nearestFood = -1;											//Guarda el indice a la comida masa cercana
 	float distance;													//VAriable temporal para guardar la distancia
 	float closestDist = smellRadius + 1;							//Variable para almacenar la distancia mas corta encontrada
-	blobCenter.x = this->pos.x + this->eGroup->texture->width / 2;	//Inicializo el ponto central del blob
-	blobCenter.y = this->pos.y + this->eGroup->texture->height / 2;
+	blobCenter.x = this->pos.x + this->eGroup->texture.width / 2;	//Inicializo el ponto central del blob
+	blobCenter.y = this->pos.y + this->eGroup->texture.height / 2;
 
 	
 
@@ -64,13 +67,18 @@ void Blob::smell(float smellRadius, Food *foodArr, unsigned int foodCant)
 			}
 		}
 	}
-
-	blobCenter.point2(foodCenter);														//Apuntamos el centro a la comida y lo pasamos al blob
-	this->pos.direction = blobCenter.direction;
+	if (nearestFood != -1)
+	{
+		foodCenter.x = foodArr[nearestFood].pos.x + foodArr[nearestFood].texture->width / 2;			//Calculo el punto central de la comida
+		foodCenter.y = foodArr[nearestFood].pos.y + foodArr[nearestFood].texture->height / 2;
+		blobCenter.point2(foodCenter);														//Apuntamos el centro a la comida y lo pasamos al blob
+		this->pos.direction = blobCenter.direction;
+	}
+	
 }
 
 
-void Blob::grow(float newDir)
+void Blob::grow(float newDir, float newSpeed)
 {
 	switch (this->eGroup->etaGroupID)			//De acuerdo a su grupo etario lo avanzamos al siguiente
 	{
@@ -84,6 +92,7 @@ void Blob::grow(float newDir)
 		break;
 	}
 	this->pos.direction = newDir;				//Actualizo la direccion y el contador de comida
+	this->vel = newSpeed;
 	this->foodCount = 0;
 }
 
@@ -103,4 +112,19 @@ void Blob::revive(float x, float y, float newDir)
 	this->pos.x = x;
 	this->pos.y = y;
 	this->pos.direction = newDir;
+}
+
+
+void Blob::loadTextures()
+{
+	goodOldBlob = EtaryGroup(GOOD_OLD_BLOB, GOB_TEXTURE);
+	grownBlob = EtaryGroup(GROWN_BLOB, GB_TEXTURE);
+	babyBlob = EtaryGroup(BABY_BLOB, BB_TEXTURE);
+}
+
+void Blob::freeTextures()
+{
+	al_destroy_bitmap(goodOldBlob.texture.bitmap);
+	al_destroy_bitmap(grownBlob.texture.bitmap);
+	al_destroy_bitmap(babyBlob.texture.bitmap);
 }

@@ -9,8 +9,7 @@ public:
 	unsigned int width;
 	ALLEGRO_BITMAP* bitmap;
 
-	Bitmap(const char* directory);
-	~Bitmap();
+	Bitmap(const char* directory = NULL);
 
 };
 

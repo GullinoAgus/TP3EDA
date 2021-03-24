@@ -15,7 +15,7 @@ typedef enum  {MODO1, MODO2} ModoType;
 class World
 {
 public:
-	Bitmap* texture;
+	Bitmap texture;
 	Blob arrBlobs[MAX_BLOB_CANT];
 	Food arrFood[MAX_FOOD_CANT];
 	float velMax;
@@ -32,12 +32,14 @@ public:
 	World(ModoType modo = MODO1, float maxVel = 10.0f, unsigned int initBlobCant = 10, unsigned int initFoodCant = 0);
 	~World();
 
-	void birth(float x, float y, float newDir);
+	int birth(float x, float y, float newDir);
 	void blobOutScreen(unsigned int blobIndex);
 	void Simulation(); 
-	void preGame();
+	bool preGame();
 	void printBlobs();
 	void printFood();
 	void gamePrint();
+	void initBlobs();
+	void initFood();
 };
 

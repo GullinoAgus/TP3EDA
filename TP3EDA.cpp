@@ -72,12 +72,14 @@ int main()
     }
 
     // Cleanup
-    world.~World();
-    ImGui_ImplAllegro5_Shutdown();
-    ImGui::DestroyContext();
+
+    al_destroy_bitmap(world.texture.bitmap);
+    Blob::freeTextures();
+    Food::freeTextures();
     al_destroy_event_queue(queue);
     al_destroy_display(display);
     al_destroy_timer(timer);
-
+    ImGui_ImplAllegro5_Shutdown();
+    ImGui::DestroyContext();
     return 0;
 }

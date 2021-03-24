@@ -30,7 +30,6 @@ public:
 	float randomJiggleLimit;
 
 	World(ModoType modo = MODO1, float maxVel = 10.0f, unsigned int initBlobCant = 10, unsigned int initFoodCant = 0);
-	~World();
 
 	int birth(float x, float y, float newDir);
 	void blobOutScreen(unsigned int blobIndex);

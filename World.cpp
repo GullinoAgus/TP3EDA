@@ -23,15 +23,6 @@ World::World( ModoType modo, float maxVel, unsigned int initBlobCant, unsigned i
 }
 
 
-World::~World()
-{
-	//al_draw_bitmap(this->texture.bitmap, 0, 0, 0);
-	//al_destroy_bitmap(this->texture.bitmap);
-	//Blob::freeTextures();
-	//Food::freeTextures();
-}
-
-
 int World::birth(float x, float y, float newDir)
 {
 	int i;

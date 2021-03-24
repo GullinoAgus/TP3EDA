@@ -9,6 +9,8 @@
 
 #define MAX_BLOB_CANT 500
 #define MAX_FOOD_CANT 100
+#define MAX_VEL 100
+#define MAX_SMELL_RADIUS 1000
 
 typedef enum  {MODO1, MODO2} ModoType;
 

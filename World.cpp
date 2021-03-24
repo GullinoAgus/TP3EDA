@@ -140,14 +140,14 @@ void World::Simulation()
 						colisionflag += 1; //Marcamos el flag para saber que el blob va a crecer
 					}
 				}
-				else if (j == arrBlobs[i].sonIndex)
+				else if (j == arrBlobs[i].sonIndex)								//Si no colisiono con el hijo
 				{
-					arrBlobs[arrBlobs[i].sonIndex].dadIndex = -1;
+					arrBlobs[arrBlobs[i].sonIndex].dadIndex = -1;				//Actualizamos los indices para sacarles la familiaridad
 					arrBlobs[i].sonIndex = -1;
 				}
-				else if (j == arrBlobs[i].dadIndex)
+				else if (j == arrBlobs[i].dadIndex)								//Si no colisiono con el padre
 				{
-					arrBlobs[arrBlobs[i].dadIndex].sonIndex = -1;
+					arrBlobs[arrBlobs[i].dadIndex].sonIndex = -1;				//Actualizamos los indices para sacarles la familiaridad
 					arrBlobs[i].dadIndex = -1;
 				}
 				
@@ -189,49 +189,48 @@ bool World::preGame()
 	ImGui_ImplAllegro5_NewFrame();
 	ImGui::NewFrame();
 	//antes de empezar la simulacion
-	ImGui::SetNextWindowSize(ImVec2(700, 300));
+	ImGui::SetNextWindowSize(ImVec2(700, 300));			//Posicionamos la ventana de opciones de ImGui
 	ImGui::SetNextWindowPos(ImVec2(100, 100));
-	ImGui::Begin("Blob World", NULL, ImGuiWindowFlags_MenuBar);//REVISAR
-	//default bool mode = 1. mode1 = true, mode2 = false
-	if (ImGui::Button("MODO 1"))
+	ImGui::Begin("Blob World");	//Inicializamos la ventana
+	if (ImGui::Button("MODO 1"))								//Si se presiona modo 1 devolvemos true para arrancar a simular
 	{
 		modo = MODO1;
 		modeSelected = true;
 	}
 	ImGui::SameLine();
-	if (ImGui::Button("MODO 2"))
+	if (ImGui::Button("MODO 2"))								//Si se presiona modo 2 devolvemos true para arrancar a simular
 	{
 		modo = MODO2;
 		modeSelected = true;
 	}
 	ImGui::SetNextItemWidth(100);
-	ImGui::InputInt("Cantidad inicial de blobs", (int*)&initBlobCount);
-	if (initBlobCount < 1 || foodCount > MAX_BLOB_CANT)
+	ImGui::InputInt("Cantidad inicial de blobs", (int*)&initBlobCount);		// Entrada para la cantidad inicial de blobs
+	if (initBlobCount < 1 || foodCount > MAX_BLOB_CANT)				//Chequeo por excesos o numeros menores q 1
 	{
 		initBlobCount = 1;
 	}
 	ImGui::SetNextItemWidth(100);
-	ImGui::InputFloat("Velocidad maxima",&velMax);
-	if (velMax < 0)
+	ImGui::InputFloat("Velocidad maxima",&velMax);					//Entrada para la velocidad maxima
+	if (velMax < 0 || velMax > MAX_VEL)												//Chequeo de datos validos
 	{
 		velMax = 0;
 	}
-	ImGui::InputFloat("Radio de olfato", &smellRadius, 0.5f, 10.0f);
-	if (smellRadius < 0)
+	ImGui::InputFloat("Radio de olfato", &smellRadius, 0.5f, 10.0f);				//Entrada del radio de olfateo
+	if (smellRadius < 0 || smellRadius > MAX_SMELL_RADIUS)												//Correccion de valor
 	{
 		smellRadius = 0;
 	}
-	ImGui::SliderFloat("Probabilidad de muerte para Baby", &deathProbBb, 0.0f, 1.0f, "%.2f");
-	ImGui::SliderFloat("Probabilidad de muerte para Grown", &deathProbGb, 0.0f, 1.0f, "%.2f");
+	ImGui::SliderFloat("Probabilidad de muerte para Baby", &deathProbBb, 0.0f, 1.0f, "%.2f");			//Entrada por slider(no necesita chequeo de bordes) para las probabilidades 
+	ImGui::SliderFloat("Probabilidad de muerte para Grown", &deathProbGb, 0.0f, 1.0f, "%.2f");			//	de muerte y el rango de angulo aleatorio para la fusion de los blobs 
 	ImGui::SliderFloat("Probabilidad de muerte para Good Old", &deathProbGOb, 0.0f, 1.0f, "%.2f");
 	ImGui::SliderFloat("Maximo de direccion de fusion", &randomJiggleLimit, 0.0f, 360.0f, "%.1f");
 	ImGui::SetNextItemWidth(100);
-	ImGui::InputInt("Cantidad de comida", (int*)&foodCount);
-	if (foodCount < 0 || foodCount > MAX_FOOD_CANT)
+	ImGui::InputInt("Cantidad de comida", (int*)&foodCount);									//Entrada de datos para el numero de comidas
+	if (foodCount < 0 || foodCount > MAX_FOOD_CANT)										//Chequeo de bordes para valores
 	{
 		foodCount = 0;
 	}
-	ImGui::End();
+	ImGui::End();																//Terminamos y dibujamos
 	al_clear_to_color(al_map_rgb(0, 50, 100));
 	ImGui::Render();
 	ImGui_ImplAllegro5_RenderDrawData(ImGui::GetDrawData());
@@ -242,23 +241,18 @@ bool World::preGame()
 
 void World::printBlobs()
 {
-	for (int i = 0; i < MAX_BLOB_CANT; i++)
+	for (int i = 0; i < MAX_BLOB_CANT; i++)		//Recorremos el arreglo de blobs y dibujamos los que esten vivos
 	{
 		if (arrBlobs[i].isAlive)
 		{
-			if (this->arrBlobs[i].eGroup->etaGroupID == BABY_BLOB)
-				al_draw_bitmap( arrBlobs[i].eGroup->texture.bitmap, arrBlobs[i].pos.x, arrBlobs[i].pos.y, 0);
-			else if (this->arrBlobs[i].eGroup->etaGroupID == GROWN_BLOB)
-				al_draw_bitmap(arrBlobs[i].eGroup->texture.bitmap, arrBlobs[i].pos.x, arrBlobs[i].pos.y, 0);
-			else if (this->arrBlobs[i].eGroup->etaGroupID == GOOD_OLD_BLOB)
-				al_draw_bitmap(arrBlobs[i].eGroup->texture.bitmap, arrBlobs[i].pos.x, arrBlobs[i].pos.y, 0);
+			al_draw_bitmap( arrBlobs[i].eGroup->texture.bitmap, arrBlobs[i].pos.x, arrBlobs[i].pos.y, 0);
 		}
 	}
 }
 
 void World::printFood()
 {
-	for (int i = 0; i < MAX_FOOD_CANT; i++)
+	for (int i = 0; i < MAX_FOOD_CANT; i++)				//Recorremos el arreglo de comida y dibujamos las que esten sin comer
 	{
 		if (arrFood[i].isNotEaten)
 		{
@@ -270,26 +264,25 @@ void World::printFood()
 void World::gamePrint()
 {
 
-	ImGui_ImplAllegro5_NewFrame();
+	ImGui_ImplAllegro5_NewFrame();										//Iniciamos el nuevo frame
 	ImGui::NewFrame();
 	al_clear_to_color(al_map_rgb(0, 50, 150));
-	ImGui::SetNextWindowSize(ImVec2(DISPLAY_WIDTH, DISPLAY_HEIGHT - 470));
+	ImGui::SetNextWindowSize(ImVec2(DISPLAY_WIDTH, DISPLAY_HEIGHT - this->texture.height));	//Armamos el tamanio para la ventana de imgui
 	ImGui::SetNextWindowPos(ImVec2(0, 470));
-	ImGui::Begin("In Game");
-	//SliderFloat("Velocidad Maxima", &velMax, 0.0f, 1.0f);//corregir resto
-	ImGui::SliderFloat("Velocidad de simulacion", &velPercent, 0.0f, 1.0f, "%.2f");
-	ImGui::SetNextItemWidth(100);
-	ImGui::InputFloat("Radio de olfato", &smellRadius, 0.5f, 10.0f);
-	if (smellRadius < 0)
+	ImGui::Begin("In Game");																//Iniciamos la ventana de imgui
+	ImGui::SliderFloat("Velocidad de simulacion", &velPercent, 0.0f, 1.0f, "%.2f");			//Slider para manejar la velocidad de simulacion
+	ImGui::SetNextItemWidth(100);															
+	ImGui::InputFloat("Radio de olfato", &smellRadius, 0.5f, 10.0f);						//Entrada para el radio de olfateo
+	if (smellRadius < 0)									//Chequeo y correccion de la entrada
 	{
 		smellRadius = 0;
 	}
-	ImGui::SliderFloat("Probabilidad de muerte para Baby", &deathProbBb, 0.0f, 1.0f, "%.2f");
+	ImGui::SliderFloat("Probabilidad de muerte para Baby", &deathProbBb, 0.0f, 1.0f, "%.2f");			//Slider para las probabilidades de muerte y el randomJiggleLimit
 	ImGui::SliderFloat("Probabilidad de muerte para Grown", &deathProbGb, 0.0f, 1.0f, "%.2f");
 	ImGui::SliderFloat("Probabilidad de muerte para Good Old", &deathProbGOb, 0.0f, 1.0f, "%.2f");
 	ImGui::SliderFloat("Maximo de direccion de fusion", &randomJiggleLimit, 0.0f, 360.0f, "%.1f");
 	ImGui::SetNextItemWidth(100);
-	ImGui::InputInt("Cantidad de comida", (int*)&foodCount);
+	ImGui::InputInt("Cantidad de comida", (int*)&foodCount);								//
 	if (foodCount < 0 || foodCount > MAX_FOOD_CANT)
 	{
 		foodCount = 0;

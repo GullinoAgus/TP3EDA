@@ -37,7 +37,7 @@ int World::birth(float x, float y, float newDir)
 	int i;
 	for (i = 0; i < MAX_BLOB_CANT && arrBlobs[i].isAlive; i++) {}	//Busco un blob muerto
 	arrBlobs[i].revive(x, y, newDir);								//Lo revivo en su nueva ubicacion
-	switch (this->modo)//En base al modo le asinamos una velocidad al blob
+	switch (this->modo)												//En base al modo le asinamos una velocidad al blob
 	{
 	case MODO1:
 		this->arrBlobs[i].vel = this->velMax;
@@ -123,7 +123,8 @@ void World::Simulation()
 
 					if (arrBlobs[i].foodCount == arrBlobs[i].eGroup->food2Birth && arrBlobs[MAX_BLOB_CANT-1].isAlive != true)
 					{
-						arrBlobs[i].sonIndex = this->birth(arrBlobs[i].pos.x, arrBlobs[i].pos.y, abs(arrBlobs[i].pos.direction - 180)); // Si ya comio suficiente da a luz
+						arrBlobs[i].sonIndex = this->birth(arrBlobs[i].pos.x, arrBlobs[i].pos.y, abs(arrBlobs[i].pos.direction + (rand() % (int)this->randomJiggleLimit))); // Si ya comio suficiente da a luz
+						arrBlobs[arrBlobs[i].sonIndex].dadIndex = i;
 						arrBlobs[i].foodCount = 0;																	//Reiniciamos el contador de alimento ingerido
 						
 					}
@@ -140,7 +141,7 @@ void World::Simulation()
 			if (arrBlobs[j].isAlive && (i != j)) {
 				if ((((this->arrBlobs[i].pos.x + this->arrBlobs[i].eGroup->texture.width) > (this->arrBlobs[j].pos.x)) && ((this->arrBlobs[i].pos.x) < (this->arrBlobs[j].pos.x + this->arrBlobs[j].eGroup->texture.width))) && (((this->arrBlobs[i].pos.y + this->arrBlobs[i].eGroup->texture.height) > (this->arrBlobs[j].pos.y)) && ((this->arrBlobs[i].pos.y) < (this->arrBlobs[j].pos.y + this->arrBlobs[j].eGroup->texture.height))))
 				{
-					if (this->arrBlobs[i].eGroup->etaGroupID == this->arrBlobs[j].eGroup->etaGroupID && j != arrBlobs[i].sonIndex)//Si son del mismo tamaño
+					if (this->arrBlobs[i].eGroup->etaGroupID == this->arrBlobs[j].eGroup->etaGroupID && j != arrBlobs[i].sonIndex && j != arrBlobs[i].dadIndex)//Si son del mismo tamaño
 					{
 						directionSum += this->arrBlobs[j].pos.direction;//Agrego al promedio la direccion del blob
 						speedSum += this->arrBlobs[j].vel;				//Agrego al promedio de la velocidad el blob
@@ -150,7 +151,13 @@ void World::Simulation()
 				}
 				else if (j == arrBlobs[i].sonIndex)
 				{
+					arrBlobs[arrBlobs[i].sonIndex].dadIndex = -1;
 					arrBlobs[i].sonIndex = -1;
+				}
+				else if (j == arrBlobs[i].dadIndex)
+				{
+					arrBlobs[arrBlobs[i].dadIndex].sonIndex = -1;
+					arrBlobs[i].dadIndex = -1;
 				}
 				
 			}
@@ -191,6 +198,8 @@ bool World::preGame()
 	ImGui_ImplAllegro5_NewFrame();
 	ImGui::NewFrame();
 	//antes de empezar la simulacion
+	ImGui::SetNextWindowSize(ImVec2(700, 300));
+	ImGui::SetNextWindowPos(ImVec2(300, 100));
 	ImGui::Begin("Blob World", NULL, ImGuiWindowFlags_MenuBar);//REVISAR
 	//default bool mode = 1. mode1 = true, mode2 = false
 	if (ImGui::Button("MODO 1"))
@@ -198,6 +207,7 @@ bool World::preGame()
 		modo = MODO1;
 		modeSelected = true;
 	}
+	ImGui::SameLine();
 	if (ImGui::Button("MODO 2"))
 	{
 		modo = MODO2;
@@ -210,19 +220,28 @@ bool World::preGame()
 		initBlobCount = 1;
 	}
 	ImGui::SetNextItemWidth(100);
-	ImGui::InputInt("Cantidad inicial de alimento", (int*)&foodCount);
-	if (foodCount < 0 || foodCount > MAX_FOOD_CANT)
-	{
-		foodCount = 0;
-	}
-	ImGui::SetNextItemWidth(100);
 	ImGui::InputFloat("Velocidad maxima",&velMax);
 	if (velMax < 0)
 	{
 		velMax = 0;
 	}
+	ImGui::InputFloat("Radio de olfato", &smellRadius, 0.5f, 10.0f);
+	if (smellRadius < 0)
+	{
+		smellRadius = 0;
+	}
+	ImGui::SliderFloat("Probabilidad de muerte para Baby", &deathProbBb, 0.0f, 1.0f, "%.2f");
+	ImGui::SliderFloat("Probabilidad de muerte para Grown", &deathProbGb, 0.0f, 1.0f, "%.2f");
+	ImGui::SliderFloat("Probabilidad de muerte para Good Old", &deathProbGOb, 0.0f, 1.0f, "%.2f");
+	ImGui::SliderFloat("Maximo de direccion de fusion", &randomJiggleLimit, 0.0f, 360.0f, "%.1f");
+	ImGui::SetNextItemWidth(100);
+	ImGui::InputInt("Cantidad de comida", (int*)&foodCount);
+	if (foodCount < 0 || foodCount > MAX_FOOD_CANT)
+	{
+		foodCount = 0;
+	}
 	ImGui::End();
-	al_clear_to_color(al_map_rgb(255, 255, 255));
+	al_clear_to_color(al_map_rgb(0, 50, 100));
 	ImGui::Render();
 	ImGui_ImplAllegro5_RenderDrawData(ImGui::GetDrawData());
 	al_flip_display();

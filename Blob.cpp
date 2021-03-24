@@ -8,9 +8,9 @@ static EtaryGroup goodOldBlob;
 static EtaryGroup grownBlob;
 static EtaryGroup babyBlob;
 
-Blob::Blob(EtaryGroupType tipo)
+Blob::Blob(EtaryGroupType type)
 {
-	switch (tipo)
+	switch (type)
 	{
 		case BABY_BLOB:
 			this->eGroup = &babyBlob;
@@ -27,6 +27,7 @@ Blob::Blob(EtaryGroupType tipo)
 	}
 	this->foodCount = 0;
 	this->sonIndex = -1;
+	this->dadIndex = -1;
 	this->isAlive = 0;
 	this->vel = 0;
 

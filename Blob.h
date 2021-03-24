@@ -15,6 +15,7 @@ public:
 	const EtaryGroup* eGroup;
 	float vel;
 	int sonIndex;
+	int dadIndex;
 	bool isAlive;
 
 	Blob(EtaryGroupType tipo = BABY_BLOB);

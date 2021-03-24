@@ -41,7 +41,7 @@ int World::birth(float x, float y, float newDir)
 	return i;
 }
 
-
+//Correccion para geometria no euclideana
 void World::blobOutScreen(unsigned int blobIndex)
 {
 	if (this->arrBlobs[blobIndex].pos.x >= this->texture.width)		//Si se pasa por la derecha
@@ -62,7 +62,7 @@ void World::blobOutScreen(unsigned int blobIndex)
 	}
 }
 
-
+//Simulacion del mundo (un llamado = un tick)
 void World::Simulation()
 {
 
@@ -181,6 +181,7 @@ void World::Simulation()
 
 }
 
+//Dibujado de lmenu de inicio
 bool World::preGame()
 {
 
@@ -239,6 +240,7 @@ bool World::preGame()
 	return modeSelected;
 }
 
+//Dibujado de los blobs
 void World::printBlobs()
 {
 	for (int i = 0; i < MAX_BLOB_CANT; i++)		//Recorremos el arreglo de blobs y dibujamos los que esten vivos
@@ -250,7 +252,8 @@ void World::printBlobs()
 	}
 }
 
-void World::printFood()
+//Dibujado de la comida
+void World::printFood()	
 {
 	for (int i = 0; i < MAX_FOOD_CANT; i++)				//Recorremos el arreglo de comida y dibujamos las que esten sin comer
 	{
@@ -261,7 +264,7 @@ void World::printFood()
 	}
 }
 
-void World::gamePrint()
+void World::gamePrint()													//Impresion de la simulacion
 {
 
 	ImGui_ImplAllegro5_NewFrame();										//Iniciamos el nuevo frame
@@ -297,7 +300,7 @@ void World::gamePrint()
 }
 
 
-void World::initBlobs()
+void World::initBlobs()										//Inicializacion de los blobs
 {
 	for (unsigned int i = 0; i < this->initBlobCount; i++)
 	{
@@ -322,7 +325,7 @@ void World::initBlobs()
 
 void World::initFood()
 {
-	for (unsigned int i = 0; i < this->foodCount; i++)
+	for (unsigned int i = 0; i < this->foodCount; i++)										//Inicializacion de la comida
 	{
 		this->arrFood[i].isNotEaten = true;
 		this->arrFood[i].pos.x = (rand() % (this->texture.width - this->arrFood[i].texture->width));

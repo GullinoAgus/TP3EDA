@@ -1,6 +1,15 @@
 #pragma once
 
 #include "Blob.h"
+#include "allegro.h"
+#include "imgui.h"
+#include "imconfig.h"
+#include "imgui_impl_allegro5.h"
+#include "imgui_internal.h"
+#include "imstb_rectpack.h"
+#include "imstb_textedit.h"
+#include "imstb_truetype.h"
+
 
 #define WORLD_TEXTURE ".\\Resources\\background.jpg"
 
@@ -32,5 +41,9 @@ public:
 	void birth(float x, float y, float newDir);
 	void blobOutScreen(unsigned int blobIndex);
 	void Simulation(); 
+	void preGame(ModoType* mode, unsigned int* initBlobCount);
+	void printBlobs(Blob* blobs);
+	void printFood(Food* food);
+	void gamePrint(float* velMax, float* velPercent, float* deathProbGOb, float* deathProbGb, float* deathProbBb, unsigned int* foodCount, float* smellRadius, ALLEGRO_DISPLAY* display);
 };
 

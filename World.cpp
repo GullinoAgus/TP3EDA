@@ -162,3 +162,83 @@ void World::Simulation()
 	}
 
 }
+
+void World::preGame(ModoType* mode, unsigned int* initBlobCount)
+{
+	//antes de empezar la simulacion
+	Begin("Blob World", &blob_world, ImGuiWindowFlags_MenuBar);
+	//default bool mode = 1. mode1 = true, mode2 = false
+	if (Button("Mode"))
+	{
+		mode ? false : true;
+		if (mode)
+			Text("Mode 1 selected");
+		else
+			Text("Mode 2 selected");
+		Begin("Blob ammount.");
+		if (Button("Increase Blob ammount"))
+			*initBlobCount++;
+		else if (Button("Decrease Blob ammount"))
+			*initBlobCount++;;
+		Text("Blobs = %d", *initBlobCount);
+		End();
+		// despues de emp
+	}
+}
+
+void World::printBlobs(Blob* blobs)
+{
+	for (int i = 0; i < BLOBS_N; i++)
+	{
+		if (blobs[i].isAlive)
+		{
+			if ( blobs[i].eGroup.etaGroupID == BABY_BLOB)
+				al_draw_bitmap( blobs[i]->eGroup.texture, blobs[i].pos.x, blobs[i].pos.y, 0);
+			else if (blobs[i]->eGroup.etaGroupID == GROWN_BLOB)
+				al_draw_bitmap(blobs[i]->eGroup.texture, blobs[i].pos.x, blobs[i].pos.y, 0);
+			else if (blobs[i]->eGroup.etaGroupID == GOOD_OLD_BLOB)
+				al_draw_bitmap(blobs[i]->eGroup.texture, blobs[i].pos.x, blobs[i].pos.y, 0);
+		}
+	}
+}
+
+void World::printFood(Food* food)
+{
+	for (int i = 0; i < FOOD_N; i++)
+	{
+		if (food[i].isNotEaten)
+		{
+			al_draw_bitmap(food[i].texture, food[i].pos.x, food[i].pos.y, 0);
+		}
+	}
+}
+
+void World::gamePrint(float* velMax, float* velPercent, float* deathProbGOb, float* deathProbGb, float* deathProbBb , unsigned int* foodCount, float* smellRadius, ALLEGRO_DISPLAY* display)
+{
+
+	Text("Maximum speed");
+	SliderFloat("float", velMax, 0.0f, 1.0f);//revisar &MaxSpeed
+	Text("Speed percentage");
+	SliderFloat("float", velPercent, 0.0f, 1.0f);//revisar &PerSpeed
+	Text("Smell radius");
+	SliderFloat("float", smellRadius, 0.0f, 1.0f);
+	Text("Baby blob death probability");
+	SliderFloat("float", deathProbBb, 0.0f, 1.0f);
+	Text("Grown blob death probability");
+	SliderFloat("float", deathProbGb, 0.0f, 1.0f);
+	Text("Old blob death probability");
+	SliderFloat("float", deathProbGOb, 0.0f, 1.0f);
+
+
+	Begin("Food count.");
+	if (Button("Increase food count"))
+		foodCount++;
+	else if (Button("Decrease food count"))
+		foodCount--;
+	Text("Food count = %d", foodCount);
+	End();
+	//que es randomJiggleLimit?
+	printBlobs(Blob * blobs);
+	printFood(Food * food);
+}
+

@@ -1,9 +1,10 @@
 #include "EtaryGroup.h"
-
+// constructoe de la clase EtaryGroup
 EtaryGroup::EtaryGroup(EtaryGroupType eGroupID, const char *textureDirectory)
 {
-	this->texture = Bitmap(textureDirectory);
-	this->etaGroupID = eGroupID;
+	this->texture = Bitmap(textureDirectory);// se le asigna la imagen correspondiente
+	this->etaGroupID = eGroupID;//se le asigna el tipo de blob correspondiente
+	//modifica la cantidad de comida necesaria para crecer de un blob
 	switch (eGroupID)
 	{
 	case BABY_BLOB:

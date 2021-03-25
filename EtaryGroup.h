@@ -11,11 +11,11 @@ typedef enum {
 class EtaryGroup
 {
 public:
-	Bitmap texture;
-	unsigned int food2Birth;
-	EtaryGroupType etaGroupID;
+	Bitmap texture;//Textura del blob en base a su grupo etario 
+	unsigned int food2Birth;//Cant de comida necesaria para dar a luz
+	EtaryGroupType etaGroupID;//Grupo etario
 
-	EtaryGroup(EtaryGroupType eGroupID = BABY_BLOB, const char* textureDirectory = NULL);
+	EtaryGroup(EtaryGroupType eGroupID = BABY_BLOB, const char* textureDirectory = NULL);//Constructor
 
 };
 

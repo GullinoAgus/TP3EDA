@@ -5,19 +5,18 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 int initAllegro5(ALLEGRO_DISPLAY*& display, ALLEGRO_EVENT_QUEUE*& queue, ALLEGRO_TIMER*& timer) {
 
-
     if (!al_init()) {                   //Inicializacion del display y los addons de allegro
         return -1;
     }
     if (!al_init_font_addon()) {        //Inicializa las fuentes de las letras
         return -1;
-        }
+    }
     if (!al_init_image_addon()) {       //Inicializa la sobre puesta de imagenes
         return -1;
     }
     if (!al_init_native_dialog_addon()) {   //Inicializa la sobrepuesta de dialogo nativa
         return -1;
-    
+    }
     if (!al_init_primitives_addon()) {      //Inicializa las primitivas de Allegro 5
         return -1;
     }
@@ -33,7 +32,7 @@ int initAllegro5(ALLEGRO_DISPLAY*& display, ALLEGRO_EVENT_QUEUE*& queue, ALLEGRO
     }
     al_set_new_display_flags(ALLEGRO_RESIZABLE);            //permite cambiar el tamaño de la ventana
     al_set_window_title(display, "Blob Simulator");         //nombra la ventana
-    timer = al_create_timer(1.0/FPS);                       //genera un temporizador 
+    timer = al_create_timer(1.0 / FPS);                       //genera un temporizador 
     queue = al_create_event_queue();                        //genera cola de eventos
     // registra como entrada de eventos al dsiplay, teclado, mouse, y timer
     al_register_event_source(queue, al_get_display_event_source(display));

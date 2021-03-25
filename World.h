@@ -11,6 +11,7 @@
 #define MAX_FOOD_CANT 100
 #define MAX_VEL 100
 #define MAX_SMELL_RADIUS 1000
+#define TICKS_2_TOSS_DEATH 60
 
 typedef enum  {MODO1, MODO2} ModoType;//los dos modos posibles de juegos
 
